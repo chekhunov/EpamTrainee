@@ -1,0 +1,156 @@
+package ua.nure.chekhunov.practice3;
+
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public final class Part2 {
+
+    public static String convert(String input) {
+        Matcher matcher = Pattern.compile("(?<=^|\\s|\\-|\\'|)[a-zA-Z\\u0410-\\u044F]*")
+                .matcher(input);
+        Set<String> splited = new LinkedHashSet<>();
+
+        MinMax minMax = new MinMax(matcher).addValuesToSet(splited);
+        int min = minMax.getMin();
+        int max = minMax.getMax();
+
+        return getResultAsString(splited, min, max);
+    }
+
+    private static String getResultAsString(Set<String> splited, int min, int max) {
+        StringBuilder sb = new StringBuilder();
+        sb = sb.append("Min: ");
+        for (String s : splited) {
+            if (s.length() == min) {
+                sb = sb.append(s).append(", ");
+            }
+        }
+        sb = sb.replace(sb.length() - 2, sb.length(), System.lineSeparator())
+                .append("Max: ");
+        for (String s : splited) {
+            if (s.length() == max) {
+                sb = sb.append(s).append(", ");
+            }
+        }
+        return sb.toString().replaceFirst(System.lineSeparator() + "\\[a-z]|\\,\\s*$", "");
+    }
+
+    private static class MinMax {
+        private Matcher matcher;
+        private int min;
+        private int max;
+
+        MinMax(Matcher matcher) {
+            this.matcher = matcher;
+        }
+
+        int getMin() {
+            return min;
+        }
+
+        int getMax() {
+            return max;
+        }
+
+        MinMax addValuesToSet(Set<String> splited) {
+            min = Integer.MAX_VALUE;
+            max = Integer.MIN_VALUE;
+            while (matcher.find()) {
+                String s = matcher.group();
+                min = (min > s.length() && s.length() != 0) ? s.length() : min;
+                max = (max < s.length()) ? s.length() : max;
+                splited.add(matcher.group());
+            }
+            return this;
+        }
+    }
+}
+//
+//import java.util.Iterator;
+//import java.util.LinkedHashSet;
+//import java.util.Set;
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
+//
+///**
+// * Implementation "Part2".
+// *
+// * @author chekhunov
+// */
+//public final class Part2 {
+//
+//	/**
+//	 * Regex for pars text on word.
+//	 */
+//	private static final String REGEX = "([\\p{L}&&[^\\p{Nd}]]+)";
+//	/**
+//	 *
+//	 */
+//	private static final Pattern PATTERTN;
+//
+//	static {
+//		PATTERTN = Pattern.compile(REGEX);
+//	}
+//
+//	/**
+//	 * Default constructor.
+//	 */
+//	private Part2() {
+//		throw new UnsupportedOperationException("Subtask02");
+//	}
+//
+//	/**
+//	 * Search Min Max words.
+//	 *
+//	 * @param input - string input data.
+//	 *
+//	 * @return Min Max words.
+//	 */
+//	public static String convert(final String input) {
+//
+//		final Set<String> word = new LinkedHashSet<>();
+//
+//		final StringBuilder strMax = new StringBuilder();
+//		final StringBuilder strMin = new StringBuilder();
+//		final StringBuilder max = new StringBuilder("Max: ");
+//		final StringBuilder min = new StringBuilder("Min: ");
+//
+//		final Matcher matcher = PATTERTN.matcher(input);
+//		while (matcher.find()) {
+//			word.add(matcher.group());
+//		}
+//
+//		final Iterator<String> it = word.iterator();
+//		final StringBuilder temp = new StringBuilder();
+//
+//		if (it.hasNext()) {
+//			strMax.append(it.next());
+//			strMin.append(strMax);
+//			while (it.hasNext()) {
+//				temp.append(it.next());
+//				if (temp.length() < strMin.length()) {
+//					strMin.setLength(0);
+//					strMin.append(temp);
+//				} else if (temp.length() > strMax.length()) {
+//					strMax.setLength(0);
+//					strMax.append(temp);
+//				}
+//				temp.setLength(0);
+//			}
+//		}
+//		for (final String var : word) {
+//			if (var.length() == strMin.length()) {
+//				min.append(var + ", ");
+//			} else if (var.length() == strMax.length()) {
+//				max.append(var + ", ");
+//			}
+//		}
+//		min.setLength(min.length() - 2);
+//		max.setLength(max.length() - 2);
+//		return min.toString() + System.lineSeparator() + max.toString();
+//	}
+//
+//}

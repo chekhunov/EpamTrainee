@@ -1,0 +1,121 @@
+package ua.nure.chekhunov.practice4;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Cycle read from the console switch (key) and the localization of the name by
+ * a space, in response prints appropriate value to the console.
+ *
+ * @author chekhunov.
+ */
+public final class Part5 {
+    /**
+     * Regex for parse input str.
+     */
+    private static final String REGEX = "([\\p{L}0-9]+)";
+
+    /**
+     * {@link Pattern}.
+     */
+    private static final Pattern PATTERN;
+    /**
+     * Message output.
+     */
+    private static final String MESSAGE_ENTER;
+    /**
+     * Length input parameters.
+     */
+    private static final int LENTH_INPUT_PARAM = 2;
+
+    /**
+     * Stop key.
+     */
+    private static final String STOP = "q";
+
+    /**
+     * Encoding.
+     */
+    private static final String ENCODING = "Cp1251";
+    static {
+        MESSAGE_ENTER = "Enter key and localizations(" + STOP + " - quit): ";
+        PATTERN = Pattern.compile(REGEX);
+    }
+
+    /**
+     * Parse input parameter.
+     *
+     * @param input
+     *            - input string.
+     * @return parse result.
+     */
+    protected static String[] parseInputStr(final String input) {
+        if (input.isEmpty()) {
+            return null;
+        }
+        final Matcher m = PATTERN.matcher(input);
+        final List<String> list = new ArrayList<>();
+        while (m.find()) {
+            list.add(m.group());
+        }
+        return list.toArray(new String[LENTH_INPUT_PARAM]);
+    }
+
+    /**
+     * Show text on console.
+     *
+     * @param input
+     *            - input string
+     */
+    protected static void printConsole(final String input) {
+        System.out.println(input);
+    }
+
+    /**
+     * Run execute.
+     *
+     * @param baseName
+     *            - base Name resource file.
+     */
+    @SuppressWarnings("resource")
+    public static void run(final String baseName) {
+        String[] resParse;
+        final Scanner scan = new Scanner(System.in, ENCODING);
+        final StringBuilder str = new StringBuilder();
+        ResourceProperty resourceProperty;
+        final StringBuilder resBundle = new StringBuilder();
+        while (true) {
+            str.setLength(0);
+            System.out.print(MESSAGE_ENTER);
+            str.append(scan.nextLine());
+            resParse = parseInputStr(str.toString().trim());
+            if (resParse == null || resParse.length > LENTH_INPUT_PARAM) {
+                printConsole("Incorrect input...");
+                continue;
+            } else if (STOP.equals(resParse[0])) {
+                printConsole("Stop...");
+                break;
+            }
+            resourceProperty = new ResourceProperty(baseName, new Locale(resParse[1]));
+            resBundle.append(resourceProperty.getValue(resParse[0]));
+            if (!"null".equals(resBundle.toString())) {
+                printConsole(str + ": " + resBundle);
+            } else {
+                printConsole("No such value");
+            }
+            resBundle.setLength(0);
+        }
+    }
+
+    /**
+     * Default constructor.
+     */
+    protected Part5() {
+        throw new UnsupportedOperationException("Exeption implement Part5");
+    }
+}
+

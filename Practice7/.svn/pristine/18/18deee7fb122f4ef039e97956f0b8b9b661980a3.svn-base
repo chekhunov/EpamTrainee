@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+<xs:element name="operator" type="newOperator"/>
+<xs:complexType name="newOperator">
+    <xs:sequence>
+        <xs:element name="tariff" type="tariff" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="tariff">
+    <xs:sequence>
+        <xs:element name="tariffname" type="xs:string"/>
+        <xs:element name="payroll" type="xs:double"/>
+        <xs:element name="callprices">
+            <xs:complexType>
+               <xs:sequence>
+            <xs:element name="insidenetwork" type="xs:double"/>
+            <xs:element name="outsidenetwork" type="xs:double"/>
+            <xs:element name="tofixedphones" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>    
+        <xs:element name="smsprice" type="xs:double"/>
+        <xs:element name="parameters">
+            <xs:complexType>
+               <xs:sequence>
+                    <xs:element name="favouritenumbers" type="xs:positiveInteger"/>
+                    <xs:element name="tariffing" type="tariffing"/>
+                    <xs:element name="connectpayment" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element> 
+</xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>    
+</xs:complexType> 
+
+<xs:simpleType name="insidenetwork">
+    <xs:restriction base="xs:double">
+        <xs:minInclusive value="0"/>
+        <xs:maxInclusive value="5"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="outsidenetwork">
+    <xs:restriction base="xs:double">
+        <xs:minInclusive value="1"/>
+        <xs:maxInclusive value="10"/>
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="tofixedphones">
+    <xs:restriction base="xs:double">
+        <xs:minInclusive value="2"/>
+        <xs:maxInclusive value="20"/>
+    </xs:restriction>
+</xs:simpleType>
+    
+<xs:simpleType name="smsprice">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0.2"/>
+            <xs:maxInclusive value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="favouritenumbers">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:maxInclusive value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="tariffing">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="for_each_twelve_seconds"/>
+            <xs:enumeration value="for_each_minute"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="connectpayment">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="10"/>
+            <xs:maxInclusive value="500"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

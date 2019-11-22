@@ -1,0 +1,36 @@
+body{
+    background-size: cover;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.vertical-menu {
+    margin: 15% 0 -10% 0;
+}
+
+.vertical-menu a {
+    margin-top:1%;
+    overflow: hidden;
+    padding: 5% 10%;
+    opacity: 0.9;
+    border: none;
+    cursor: pointer;
+    background-color: #333;
+    color: #fff;
+    display: block;
+    text-decoration: none;
+}
+
+.vertical-menu a:hover {
+    background-color:  #D3D3D3;
+    color:#333;
+    opacity: 1;
+}
+
+.vertical-menu a.active {
+    background-color: #4CAF50;
+    color: white;
+    opacity: 1;
+}

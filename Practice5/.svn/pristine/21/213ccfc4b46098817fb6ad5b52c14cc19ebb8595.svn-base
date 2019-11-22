@@ -1,0 +1,25 @@
+package ua.nure.chekhunov.practice5;
+
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+public final class Part2 {
+
+    private Part2() {
+    }
+
+    public static void main(String[] args) throws Exception {
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(System.lineSeparator().getBytes());
+        byteIn.skip(System.lineSeparator().length());
+        InputStream stdIn = System.in;
+        System.setIn(byteIn);
+
+        Spam.main(args);
+        Thread.sleep(4000);
+
+        System.out.println("Try to send enter to standard input");
+        byteIn.reset();
+        System.setIn(stdIn);
+    }
+}

@@ -1,0 +1,166 @@
+package ua.nure.chekhunov.practice5;
+
+/**
+ * @author chekhunov
+ *
+ */
+public class Part3 {
+
+	/**
+	 * Counter 1.
+	 */
+	private int counter;
+		
+	/**
+	 * Counter 2.
+	 */
+	private int counter2;
+
+	/**
+	 * Loop repeats k times.
+	 */
+	private int loopPeps;
+		
+	/**
+	 * Falls asleep at t ms.
+	 */
+	private int sleep;
+	
+	/**
+	 * Arrays threads.
+	 */
+	private Thread[] threads;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param n - threads.
+	 * @param k - loopPeps.
+	 * @param t - sleep. 
+	 */
+	public Part3(int n, int k, int t) {
+		this.threads = new Thread[n];
+		this.loopPeps = k;
+		this.sleep = t;
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
+	public int getCounter2() {
+		return counter2;
+	}
+
+	public void setCounter2(int counter2) {
+		this.counter2 = counter2;
+	}
+
+	/**
+	 * Method reset - resets readings counter, counter2.
+	 */
+	public void reset() {
+		counter = 0;
+		counter2 = 0;
+	}
+
+	/**
+	 * Method output - displays meter readings and + them by 1(counter, counter2).
+	 */
+	public void output() {
+		System.out.printf("%s %s%n", counter, counter2);
+		try {
+			setCounter(getCounter() + 1);
+			Thread.sleep(sleep);
+			setCounter2(getCounter2() + 1);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	/**
+	 * Method test - all threads start.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void test() throws InterruptedException {
+
+		for (int i = 0; i < threads.length; i++) {
+			threads[i] = new ThreadImp();
+			threads[i].start();
+		}
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].join();
+		}
+	}
+
+	/**
+	 * Method testSync - all synchronized threads start.
+	 */
+	public void testSync() {
+		for (int i = 0; i < threads.length; i++) {
+			threads[i] = new ThreadImpSynch();
+			threads[i].start();
+		}
+	}
+
+	public void closeThreads() {
+		for(Thread thread : Part3.this.threads)
+		{
+		    thread.interrupt();
+		}
+	}
+	
+	/**
+	 * Main method.
+	 * 
+	 * @param args
+	 * @throws InterruptedException
+	 */
+	public static void main(String[] args) throws InterruptedException {
+		Part3 p = new Part3(3, 5, 100);
+		p.test();
+		p.reset();
+		p.testSync();
+				
+	}
+
+	/**
+	 * Implementation ThreadImp. <br>
+	 * ThreadImp extends {@link Thread}.
+	 * 
+	 * @author chekhunov.
+	 *
+	 */
+	public class ThreadImp extends Thread {
+		@Override
+		public void run() {
+			for (int i = 0; i < Part3.this.loopPeps; i++) {
+				output();
+			}
+		}
+	}
+
+	/**
+	 * Implementation ThreadImpSynch. <br>
+	 * ThreadImp extends {@link Thread}.
+	 *  		- synchronized (Part3.this)
+	 * 
+	 * @author macbookpro
+	 *
+	 */
+	public class ThreadImpSynch extends Thread {
+		@Override
+		public void run() {
+			synchronized (Part3.this) {
+				for (int i = 0; i < Part3.this.loopPeps; i++) {
+					output();
+				}
+			}
+		}
+	}
+}

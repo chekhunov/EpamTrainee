@@ -1,0 +1,133 @@
+package ua.nure.chekhunov.practice6.part6;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Part62 {
+
+	private String filename;
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	private String text;
+
+	private Map<String, Integer> map = new HashMap<String, Integer>();
+
+	private SortByValue sbv = new SortByValue(map);
+
+	private Map<String, Integer> map2 = new TreeMap<String, Integer>(sbv);
+
+	private String[] arr;
+
+	public final void arrInitialize() {
+
+		try {
+			StringBuilder sb = new StringBuilder();
+			Scanner sc = new Scanner(new File(getFilename()), "CP1251");
+			while (sc.hasNext()) {
+				sb.append(sc.next() + " ");
+			}
+			text = sb.toString();
+			sc.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("File " + getFilename() + " not found");
+		}
+		arr = initialize();
+
+	}
+
+	public final String[] initialize() {
+		StringBuilder sb = new StringBuilder();
+		Pattern p = Pattern.compile("[a-zA-Z]+");
+		Matcher m = p.matcher(text);
+		while (m.find()) {
+			sb.append(m.group() + " ");
+		}
+		return sb.toString().split(" ");
+
+	}
+
+	public void length() {
+
+		for (int i = 0; i < arr.length; i++) {
+
+			if (map.containsKey(arr[i])) {
+				continue;
+			}
+			map.put(arr[i], arr[i].length());
+		}
+		map2.putAll(map);
+
+	}
+
+	public void output() {
+		int i = 0;
+		for (Map.Entry<String, Integer> entry : map2.entrySet()) {
+
+			if (i == 3) {
+				break;
+			}
+
+			System.out.println(entry.getKey() + " ==> " + entry.getValue());
+			i++;
+		}
+	}
+
+	public boolean consoleOutput(String str, String filename, String str2,
+			String operation) {
+		if (!(str.equals("--input") || str.equals("-i"))) {
+			System.err.println("Wrong operation");
+			return false;
+		}
+		setFilename(filename);
+		if (!(str2.equals("--task") || str2.equals("-t"))) {
+			System.err.println("Wrong task");
+			return false;
+		} else if (operation.equals("length")) {
+			this.arrInitialize();
+			this.length();
+			this.output();
+			return true;
+		}
+		return true;
+	}
+
+	public static void main(String[] args) {
+		Part62 part62 = new Part62();
+		part62.consoleOutput(args[0], args[1], args[2], args[3]);
+	}
+
+	private static class SortByValue implements Comparator<String> {		
+
+		public SortByValue(Map<String, Integer> map) {
+			this.map = map;
+		}
+
+		private Map<String, Integer> map;
+
+		@Override
+		public int compare(String o1, String o2) {
+			if (map.get(o1) >= map.get(o2)) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+
+	}
+
+}
+

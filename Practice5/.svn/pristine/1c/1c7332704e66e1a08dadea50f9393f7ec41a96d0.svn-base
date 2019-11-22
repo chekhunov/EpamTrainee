@@ -1,0 +1,165 @@
+package ua.nure.chekhunov.practice5;
+
+import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
+
+/**
+ *
+ * @author chekhunov
+ *
+ */
+public class Part3 implements Comparator<Integer> {
+	private static final int RUN_COUNT = 10;
+	private static final int TIME_SLEEP = 10;
+	
+	private int counter = 0;
+	private int counter2 = 0;
+
+	private int childThreads = 0;
+	private int loopPeps = 0;
+	private int sleep = 0;
+
+	public Part3(int n, int k, int t) {
+		this.childThreads = n;
+		this.loopPeps = k;
+		this.sleep = t;
+	}
+
+	/**
+	 * Print console.
+	 * 
+	 * @throws InterruptedException - multithreaded exception.
+	 */
+	private void printConsole() throws InterruptedException {
+		System.err.println(Thread.currentThread().getName());
+		//System.out.printf("%s %s %n", counter, counter2);
+		System.err.println(
+				counter + " " + counter2);
+		System.err.println("compare (counter1 - counter2): " + compare(counter, counter)
+				+ System.lineSeparator());
+		counter++;
+		TimeUnit.MILLISECONDS.sleep(TIME_SLEEP);
+		counter2++;
+	}
+
+	/**
+	 * no synchronized method.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void test() throws InterruptedException {
+
+		Part3 obj = new Part3(childThreads, loopPeps, sleep);
+		Method method = obj.new ComparisonNoSynchronized();
+		ThreadImp t1 = new ThreadImp(method);
+		ThreadImp t2 = new ThreadImp(method);
+		t1.join();
+		t2.join();
+	}
+
+	public void reset() {
+		counter = 0;
+		counter2 = 0;
+	}
+
+	/**
+	 * Synchronized method.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void testSync() throws InterruptedException {
+		Part3 p = new Part3(childThreads, loopPeps, sleep);
+		Method method2 = p.new ComparisonSynchronized();
+		ThreadImp t1Synch = new ThreadImp(method2);
+		ThreadImp t2Synch = new ThreadImp(method2);
+		t1Synch.join();
+		t2Synch.join();
+	}
+
+	/**
+	 * @param args
+	 * @throws InterruptedException
+	 */
+	public static void main(String[] args) throws InterruptedException {
+		Part3 p = new Part3(4, 3, 50);
+		p.test();
+		p.reset();
+		p.testSync();
+	}
+
+	@Override
+	public int compare(Integer o1, Integer o2) {
+		Integer counterP = counter;
+		Integer counterP2 = counter2;
+		return counterP.compareTo(counterP2);
+	}
+
+	private static class ThreadImp extends Thread {
+		/**
+		 * {@link Method}.
+		 */
+		private final Method method;
+
+		/**
+		 * Constructor with parameters.
+		 * 
+		 * @param method - {@link Method}.
+		 */
+		ThreadImp(final Method method) {
+			this.method = method;
+			start();
+		}
+
+		@Override
+		public void run() {
+			int i = 1;
+			try {
+				while (i != RUN_COUNT) {
+					method.comparison();
+					++i;
+				}
+			} catch (InterruptedException e) {
+				System.err.println(e.getMessage());
+			}
+		}
+	}
+
+	private interface Method {
+		
+		/**
+		 * Comparison method.
+		 * 
+		 * @throws InterruptedException - multithreaded exception.
+		 */
+		void comparison() throws InterruptedException;
+	}
+
+	/**
+	 * Implementation ComparisonNoSynchronized. <br>
+	 * ComparisonNoSynchronized implements {@link Method}.
+	 * 
+	 * @author chekhunov.
+	 * 
+	 */
+	private class ComparisonNoSynchronized implements Method {
+
+		@Override
+		public void comparison() throws InterruptedException {
+			printConsole();
+		}
+	}
+
+	/**
+	 * Implementation ComparisonSynchronized. <br>
+	 * ComparisonSynchronized implements {@link Method}.
+	 * 
+	 * @author chekhunov.
+	 */
+	private class ComparisonSynchronized implements Method {
+
+		@Override
+		public synchronized void comparison() throws InterruptedException {
+			printConsole();
+		}
+	}
+}

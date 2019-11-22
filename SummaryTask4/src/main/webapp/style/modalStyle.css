@@ -1,0 +1,147 @@
+.label {
+    float: left;
+    width: 30%;
+    text-align: center;
+}
+
+input[type=text] {
+    font-size: 16px;
+    margin: 5px 0px;
+    display: inline-block;
+    box-sizing: border-box;
+
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+select {
+    font-size: 16px;
+    width: 100%;
+    padding: 7px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.chooseTypeModal {
+    font-size: 16px;
+    width: 100%;
+    padding: 7px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.prcButton, .edtButton {
+    color: white;
+    padding: 14px 20px;
+    margin: 1% 25% -2%;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 50%;
+}
+
+.prcButton {
+    background-color: #4CAF50;
+}
+
+.edtButton {
+    color:black;
+    background-color: #FFFF00;
+}
+
+.prcButton:hover, .cancelButton:hover, .edtButton:hover {
+    opacity: 0.8;
+}
+
+.cancelButton {
+    background-color: #f44336;
+    color: black;
+    padding: 14px 25px;
+    margin: 3px 25%;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 50%;
+}
+
+.yesButton, .noButton {
+    color: white;
+    padding: 14px 20px;
+    margin: 1% 0 0 15% ;
+    border: none;
+    font-size:17px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 25%;
+}
+
+.yesButton{
+    background-color: green;
+}
+.noButton{
+    background-color: red;
+}
+
+.resultButtons{
+    padding: 10px 10px;
+}
+
+
+.modalContainer {
+    padding: 16px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 0 auto auto auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 45%; /* Could be more or less, depending on screen size */
+    padding: 15px 15px;
+    border-radius: 30px;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+

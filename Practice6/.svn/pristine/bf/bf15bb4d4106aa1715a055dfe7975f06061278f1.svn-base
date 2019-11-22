@@ -1,0 +1,114 @@
+package ua.nure.chekhunov.practice6.part4;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class Range implements Iterable<Integer> {
+
+	private final Node<Integer> node;
+
+	private final int m;
+
+	private final int n;
+
+	public Range(int n, int m) {
+		if (n >= m) {
+			throw new IllegalArgumentException(n + " > " + m);
+		}
+
+		this.n = n;
+		this.m = m;
+
+		node = new Forward();
+	}
+
+	public Range(final int n, final int m, final boolean reverse) {
+		if (n >= m) {
+			throw new IllegalArgumentException(n + " > " + m);
+		}
+		this.n = n;
+		this.m = m;
+
+		if (!reverse) {
+			node = new Forward();
+		} else {
+			node = new ReversOrder();
+		}
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return new IteratorImp();
+	}
+
+	private class IteratorImp implements Iterator<Integer> {
+
+		@Override
+		public boolean hasNext() {
+			return node.hasStep();
+		}
+
+		@Override
+		public Integer next() {
+			return node.step();
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	private class ReversOrder implements Node<Integer> {
+
+		private int pointer;
+
+		ReversOrder() {
+			pointer = m;
+		}
+
+		@Override
+		public boolean hasStep() {
+			return pointer >= n;
+		}
+
+		@Override
+		public Integer step() {
+			if (pointer < n) {
+				throw new NoSuchElementException("Non element");
+			}
+			return pointer--;
+		}
+	}
+
+	private class Forward implements Node<Integer> {
+
+		private int pointer;
+
+		Forward() {
+			pointer = n;
+		}
+
+		@Override
+		public boolean hasStep() {
+			return pointer <= m;
+		}
+
+		@Override
+		public Integer step() {
+			if (pointer > m) {
+				throw new NoSuchElementException("Non element");
+			}
+			return pointer++;
+		}
+	}
+
+	public final int getN() {
+		return n;
+	}
+
+	public final int getM() {
+		return m;
+	}
+
+}

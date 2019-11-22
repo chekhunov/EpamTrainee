@@ -1,0 +1,89 @@
+body {
+    background-image: url(../img/bg14.jpg);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input:invalid:not(:placeholder-shown) {
+    border-color: red;
+}
+
+input:valid:not(:placeholder-shown) {
+    border-color: green;
+}
+
+.makeOrder {
+    width: 470px;
+    height: 255px;
+    background-color: rgba(105, 105, 105, 0.7);
+    margin: 160px auto 0 auto;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.label {
+    float: left;
+    width: 30%;
+    font-size: 18px;
+    margin-top: 15px;
+
+}
+
+.inputParameter {
+    float: left;
+    width: 70%;
+    margin-top: 10px;
+}
+
+input[type = date], input[type = text], select {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.row {
+    padding: 10px 15px;
+    margin: 0 0 0 0;
+
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.submitBtn, .submitHrefButton a {
+    padding: 10px 40px;
+    margin: 10px 0 20px 0;
+    font-size: 16px;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.submitHrefButton {
+    margin: 20px 0 20px 0;
+}
+
+.submitHrefButton a {
+    font-size: 18px;
+}
+
+.submitBtn:hover, .submitHrefButton a:hover {
+    transition: all 0.3s;
+    color: black;
+    background-color: #D3D3D3;
+}
+
+h1 {
+    text-align: center;
+    margin: 2% 0 -5% 0;
+}

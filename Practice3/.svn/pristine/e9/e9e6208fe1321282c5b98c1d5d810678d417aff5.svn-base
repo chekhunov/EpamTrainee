@@ -1,0 +1,76 @@
+package ua.nure.chekhunov.practice3;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
+
+/**
+ * @author chekhunov
+ *
+ */
+public final class Part4 {
+
+	/**
+     * Default constructor.
+     *
+     * @throws Exception
+     *
+     */
+    private Part4() {
+	throw new UnsupportedOperationException("Subtask04");
+    }
+	
+    /**
+     * Convert string input data to string hash-hex.
+     *
+     * @param input     - input data.
+     * @param algorithm - name algorithm.
+     * @return hash code in hex
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     * @throws Exception                    - not found algoritm.
+     *
+     */
+    public static String hash(final String input, final String algorithm) throws NoSuchAlgorithmException {
+
+	MessageDigest digest;
+
+	switch (algorithm) {
+	case "MD5":
+	    digest = MessageDigest.getInstance(algorithm);
+	    break;
+	case "SHA-256":
+	    digest = MessageDigest.getInstance(algorithm);
+	    break;
+	case "SHA-512":
+	    digest = MessageDigest.getInstance(algorithm);
+	    break;
+	default:
+	    throw new NoSuchAlgorithmException("Not found input algorithm");
+	}
+	digest.reset();
+	final String encoding = "Cp1251";
+	try {
+	    digest.update(input.getBytes(encoding));
+	} catch (final UnsupportedEncodingException e) {
+	    throw new AssertionError("UTF-8 not supported");
+	}
+	final byte[] hash = digest.digest();
+	final StringBuilder hexString = new StringBuilder();
+	final StringBuilder hex = new StringBuilder();
+	for (final byte var : hash) {
+	    final char count = 0xFF;
+	    hex.append(Integer.toHexString(count & var));
+	    if (hex.length() == 1) {
+		hexString.append('0');
+	    }
+	    hexString.append(hex);
+	    hex.setLength(0);
+	}
+	hexString.toString();
+	final String result = hexString.toString();
+	return result.toUpperCase(Locale.ENGLISH);
+    }  
+
+}

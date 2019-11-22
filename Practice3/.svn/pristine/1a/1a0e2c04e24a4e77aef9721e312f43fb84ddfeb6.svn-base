@@ -1,0 +1,94 @@
+package ua.nure.chekhunov.practice3;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Implementation "Part1".
+ * 
+ * @author chekhunov
+ */
+public class Part2 {
+
+    /**
+     * String input get part1.txt
+     */
+    private static final String ENCODING = "Cp1251";
+
+    public static String convert(String input) {
+
+        StringBuilder sb = new StringBuilder();
+        int count = Integer.MAX_VALUE;
+        sb.append("MIN: ");
+        Pattern p = Pattern.compile("[a-zA-Z]+");
+        Matcher m = p.matcher(input);
+        while (m.find()) {
+            Pattern p2 = Pattern.compile(m.group());
+            Matcher m2 = p2.matcher(sb.toString().substring(5));
+            if (count > m.group().length()) {
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("MIN: ");
+                count = m.group().length();
+                sb2.append(m.group());
+                sb = sb2;
+            } else if (count == m.group().length() && !(m2.find())) {
+                sb.append(", " + m.group());
+
+            }
+        }
+
+        StringBuilder sb4 = new StringBuilder();
+        int count1 = 0;
+        sb4.append("Max: ");
+        Pattern p1 = Pattern.compile("[a-zA-Z]+");
+        Matcher m1 = p1.matcher(input);
+        while (m1.find()) {
+            Pattern p3 = Pattern.compile(m1.group());
+            Matcher m3 = p3.matcher(sb4.toString());
+            if (count1 < m1.group().length()) {
+                StringBuilder sb5 = new StringBuilder();
+                sb5.append("MAX: ");
+                count1 = m1.group().length();
+                sb5.append(m1.group());
+                sb4 = sb5;
+            } else if (count1 == m1.group().length() && !(m3.find())) {
+                sb4.append(", " + m1.group());
+
+            }
+        }
+
+        return sb.toString() + sb4.toString();
+    }
+
+    /**
+     * @param -path get input(part2.txt)
+     * @return - String res
+     * @see reading txt file "Cp1251"
+     */
+    public static String readFile(String path) {
+        String res = null;
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(path));
+            res = new String(bytes, ENCODING);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return res;
+    }
+
+    /**
+     * Main function.
+     * 
+     * @param args - argument functions main.
+     * @throws IOException
+     */
+    public static void main(String[] args) {
+
+        System.out.println(Part2.convert(readFile("part2.txt")));
+
+    }
+
+}

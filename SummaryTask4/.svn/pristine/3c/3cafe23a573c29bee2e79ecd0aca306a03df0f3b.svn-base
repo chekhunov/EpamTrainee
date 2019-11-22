@@ -1,0 +1,99 @@
+.navigationBar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial, serif;
+    margin-top: 5px;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url(../img/bg01.png);
+}
+
+.navigationBar a {
+    float: right;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropDown {
+    float: right;
+    overflow: hidden;
+}
+
+.dropButton-profile, .dropDownContent-profile {
+    min-width: 110px;
+}
+
+.dropButton-language, .dropDownContent-language {
+    min-width: 90px;
+}
+
+.dropButton-profile, .dropButton-language {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: #fff;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+}
+
+.navigationBar a:hover, .dropButton-profile:hover, .dropButton-language:hover {
+    background-color: #D3D3D3;
+    color: #333;
+}
+
+.dropDownContent-profile, .dropDownContent-language {
+    display: none;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    background-color: #333;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.home {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+}
+
+.optionalButton {
+    float: right;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+}
+
+.dropDownContent-profile a, .dropDownContent-language a {
+    float: none;
+    color: #fff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropDownContent-profile a:hover, .dropDownContent-language a:hover {
+    background-color: #D3D3D3;
+    color: #333;
+}
+
+.dropDown:hover .dropDownContent-profile, .dropDown:hover .dropDownContent-language {
+    display: block;
+}
+
+/*.footer {
+    margin: 100px 5px 20px;
+    padding: 14px 16px;
+    overflow: hidden;
+    background: #333;
+    text-align: center;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url(../img/bg01.png);
+    color: #fff;
+    font-family: Arial, serif;
+    font-size: 18px;
+}*/
+

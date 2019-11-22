@@ -1,0 +1,73 @@
+package ua.nure.chekhunov.practice4;
+
+import java.nio.charset.Charset;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+	public final class Part5 {
+		private Part5() {
+		}
+
+		private static final String BASE_NAME = "resources";
+		private static final Pattern PATTERN = Pattern.compile("(\\w+)\\s(\\w+)",
+				Pattern.MULTILINE
+						| Pattern.UNICODE_CHARACTER_CLASS
+						| Pattern.CASE_INSENSITIVE);
+
+
+		public static void main(String[] args) {
+
+			Scanner scanner = new Scanner(System.in, Charset.defaultCharset().name());
+			while (scanner.hasNextLine()) {
+				String s = scanner.nextLine();
+				if ("stop".equalsIgnoreCase(s)) {
+					break;
+				}
+				Matcher matcher = PATTERN.matcher(s);
+				if (matcher.find()) {
+					String name = matcher.group(1);
+					String lang = matcher.group(2);
+					ResourceBundle resource = ResourceBundle.getBundle(BASE_NAME, new Locale(lang));
+					System.out.println(resource.getString(name));
+				}
+			}
+		}
+
+	}
+//	private static final String FILE_NAME = "resources";
+//
+//	public void output() {
+//		Scanner sc = new Scanner(System.in, "cp1251");
+//		while (sc.hasNext()) {
+//			try {
+//				String[] arr = sc.nextLine().split(" ");
+//				if (arr[0].equalsIgnoreCase("stop")) {
+//					System.out.println("Finished");
+//					break;
+//				}
+//				if (arr.length != 2) {
+//					throw new ArrayIndexOutOfBoundsException();
+//				}
+//				Locale locale = new Locale(arr[1].toLowerCase());
+//				ResourceBundle rb = ResourceBundle.getBundle(FILE_NAME, locale);
+//				System.out.println(rb.getString(arr[0]));
+//			} catch (ArrayIndexOutOfBoundsException e) {
+//				System.out.println("Output required: [key] [value]");
+//				continue;
+//			} catch (MissingResourceException e) {
+//				System.out.println("No such value");
+//				continue;
+//			}
+//		}
+//		sc.close();
+//	}
+//
+//	public static void main(String[] args) {
+//		new Part5().output();
+//	}
+//}

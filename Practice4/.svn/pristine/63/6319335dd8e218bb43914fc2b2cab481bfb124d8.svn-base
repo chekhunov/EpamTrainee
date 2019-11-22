@@ -1,0 +1,92 @@
+package ua.nure.chekhunov.practice4;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * Demo.
+ *
+ * @author chekhunov.
+ */
+public class Demo {
+    /**
+     * Encoding.
+     */
+    public static final String ENCODING = "Cp1251";
+    /**
+     * Save {@link System.in}.
+     */
+    private static final InputStream STD_IN = System.in;
+
+
+    /**
+     * Path to the file for part3.
+     */
+    public static final String FILE_NAME_PART3 = "part3.txt";
+    /**
+     * Base name resources file.
+     */
+    public static final String RESOURCES_BASE_NAME = "resources";
+
+    /**
+     * Scan for part3.
+     */
+    private static final String PART3_SCAN_IN = "String" + System.lineSeparator() + "double"
+            + System.lineSeparator() + "int" + System.lineSeparator() + "char"
+            + System.lineSeparator() + "q";
+
+    /**
+     * Scan for part5.
+     */
+    private static final String PART5_SCAN_IN = "table en" + System.lineSeparator() + "table ru"
+            + System.lineSeparator() + "apple en" + System.lineSeparator() + "apple ru"
+            + System.lineSeparator() + "q";
+
+    /**
+     * Main functions.
+     *
+     * @param args
+     *            argument main functions.
+     * @throws IOException
+     *             {@link IOException}.
+     */
+    public static void main(final String[] args) throws IOException {
+        // part1
+        System.out.println("=========================== PART1");
+        Part1.main(args);
+        System.out.println();
+
+        // part2
+        System.out.println("=========================== PART2");
+        Part2.main(args);
+
+        // part3
+        System.setIn(new ByteArrayInputStream(PART3_SCAN_IN.getBytes(ENCODING)));
+        System.out.println();
+        System.out.println("=========================== PART3");
+        Part3.run(FILE_NAME_PART3, ENCODING);
+        // resource the standard input
+        System.setIn(STD_IN);
+
+        // part4
+        System.out.println("=========================== PART4");
+        Part4.main(args);
+
+        // part5
+        System.setIn(new ByteArrayInputStream(PART5_SCAN_IN.getBytes(ENCODING)));
+        System.out.println();
+        System.out.println("=========================== PART5");
+        Part5.run(RESOURCES_BASE_NAME);
+        System.setIn(STD_IN);
+
+        // part6
+        System.out.println("=========================== PART6");
+        // set the mock input
+        System.setIn(new ByteArrayInputStream(
+                "Latn^Cyrl^asdf^latn^cyrl^stop".replace("^", System.lineSeparator()).getBytes()));
+        Part6.main(args);
+        // restore the standard input
+        System.setIn(STD_IN);
+    }
+}

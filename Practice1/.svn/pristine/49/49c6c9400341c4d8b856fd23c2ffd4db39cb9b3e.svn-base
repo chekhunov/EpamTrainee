@@ -1,0 +1,66 @@
+package ua.nure.chekhunov.practice1;
+
+public class Part7 {
+
+    public static int str2int(String number) {
+
+        int res = 0;
+        final int constantBitSystem = 64;
+        final int calculusSystemsInM = 26;
+
+        for (int i = 0, j = number.length() - 1; i < number.length(); i++, j--) {
+            res += (number.charAt(j) - constantBitSystem) * Math.pow(calculusSystemsInM, i);
+        }
+        return res;
+    }
+
+    public static String int2str(int number) {
+        final int constantBitSystem = 64;
+        final int calculusSystems = 26;
+        int modul;
+        int divident = number;
+        StringBuilder buildChars = new StringBuilder();
+
+        while (divident != 0) {
+            modul = divident % calculusSystems;
+            if (modul == 0) {
+                buildChars.append("Z");
+                divident = (divident - 1) / calculusSystems;
+            } else {
+                buildChars.append((char) (modul + constantBitSystem));
+                divident = (divident - modul) / calculusSystems;
+            }
+        }
+        StringBuilder bld = new StringBuilder();
+        for (int i = 0; i < buildChars.length(); ++i) {
+            bld.append(buildChars.charAt(buildChars.length() - i - 1));
+        }
+        return bld.toString();
+
+    }
+
+    public static String rightColumn(String number) {
+
+        String chars = "";
+        int num;
+        num = str2int(number);
+        num++;
+        chars = int2str(num);
+        return chars;
+    }
+
+    public static void main(String[] args) {
+        final String ACTION_1 = " ==> ";
+
+        System.out.println("A" + ACTION_1 + "1" + ACTION_1 + "A");
+        System.out.println("B" + ACTION_1 + "2" + ACTION_1 + "B");
+        System.out.println("Z" + ACTION_1 + "26" + ACTION_1 + "Z");
+        System.out.println("AA" + ACTION_1 + "27" + ACTION_1 + "AA");
+        System.out.println("AZ" + ACTION_1 + "52" + ACTION_1 + "AZ");
+        System.out.println("BA" + ACTION_1 + "53" + ACTION_1 + "BA");
+        System.out.println("ZZ" + ACTION_1 + "702" + ACTION_1 + "ZZ");
+        System.out.println("AAA" + ACTION_1 + "703" + ACTION_1 + "AAA");
+
+    }
+
+}

@@ -1,0 +1,131 @@
+package ua.nure.chekhunov.practice6.part5;
+
+public class Tree<E extends Comparable<E>> {
+
+	private static final String SPACE = " ";
+
+	private Node<E> rootNode;
+
+	public boolean add(E e) {
+		if (rootNode == null) {
+			rootNode = new Node<E>(e, null, null);
+			return true;
+		}
+		return add(rootNode, e);
+	}
+
+	public void add(E[] elements) {
+		for (int i = 0; i < elements.length; i++) {
+			add(elements[i]);
+		}
+	}
+
+	private boolean add(Node<E> node, E e) {
+		if (e.compareTo(node.element) > 0) {
+			if (node.rigthNode == null) {
+				node.rigthNode = new Node<E>(e, null, null);
+				return true;
+			}
+			return add(node.rigthNode, e);
+		}
+		if (e.compareTo(node.element) < 0) {
+			if (node.leftNode == null) {
+				node.leftNode = new Node<E>(e, null, null);
+				return true;
+			}
+			return add(node.leftNode, e);
+		}
+		return false;
+	}
+
+	public void print() {
+		print(rootNode, new StringBuilder());
+	}
+
+	private void print(Node<E> node, StringBuilder sb) {
+		if (node != null) {
+			sb.append(SPACE);
+			print(node.leftNode, sb);
+			sb.append(SPACE);
+			if (node.equals(rootNode)) {
+				System.out.println(node.element);
+				sb.delete(0, sb.length());
+			} else {
+				System.out.println(sb.toString() + node.element);
+			}
+			sb.append(SPACE);
+			print(node.rigthNode, sb);
+			sb.delete(0, sb.length());
+		}
+	}
+
+	public boolean remove(E element) {
+		final String lNode = "lNode";
+		final String rNode = "rNode";
+		Node<E> parent = null;
+		Node<E> current = rootNode;
+		int previous;
+		String lastNode = null;
+
+		while (current != null && (previous = current.element.compareTo(element)) != 0) {
+			parent = current;
+			if (previous > 0) {
+				current = current.leftNode;
+				lastNode = lNode;
+			} else {
+				current = current.rigthNode;
+				lastNode = rNode;
+			}
+		}
+		if (current == null) {
+			return false;
+		}
+
+		if (current.rigthNode == null) {
+			if (lastNode.equals(rNode)) {
+				parent.rigthNode = current.leftNode;
+			} else if (lastNode.equals(lNode)) {
+				parent.leftNode = current.leftNode;
+			} else {
+				rootNode = current.leftNode;
+			}
+		}
+
+		if (current.leftNode == null) {
+			if (lastNode.equals(rNode)) {
+				parent.rigthNode = current.rigthNode;
+			} else if (lastNode.equals(lNode)) {
+				parent.leftNode = current.rigthNode;
+			} else {
+				rootNode = current.rigthNode;
+			}
+		}
+
+		Node<E> replacement = current.rigthNode;
+		parent = current;
+		while (replacement.leftNode != null) {
+			parent = replacement;
+			replacement = replacement.leftNode;
+		}
+		current.element = replacement.element;
+		if (parent.equals(current)) {
+			parent.rigthNode = replacement.rigthNode;
+		} else {
+			parent.leftNode = replacement.rigthNode;
+		}
+		return true;
+	}
+
+	private class Node<E> {
+
+		private E element;
+		private Node<E> leftNode;
+		private Node<E> rigthNode;
+
+		public Node(E element, Node<E> lNode, Node<E> rNode) {
+			this.element = element;
+			this.leftNode = lNode;
+			this.rigthNode = rNode;
+		}
+	}
+}

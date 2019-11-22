@@ -1,0 +1,115 @@
+package ua.nure.chekhunov.practice5;
+
+import java.io.IOException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+/**
+ * @author chekhunov
+ *
+ */
+public class Spam extends Thread {
+
+	private Spam() {
+	}
+	
+	private static boolean flag;
+
+	public static boolean isFlag() {
+		return flag;
+	}
+
+	public static void setFlag(boolean flag) {
+		Spam.flag = flag;
+	}
+	
+	private String[] messages = new String[] { "@@@", "bbbbbbb" };
+	private int[] time = new int[] { 333, 222 };
+	
+	
+	public void run() {
+		while (true) {
+			try {
+				for (int i = 0; i < messages.length; i++) {
+					System.out.println(messages[i]);
+					Thread.sleep(time[i]);
+					if (flag) {
+						break;
+					}
+				}
+				break;
+			} catch (Exception ex) {
+				System.err.println("Thread:" + Thread.currentThread().getName()
+						+ " is interrupted");
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		final Spam t = new Spam();
+		t.setDaemon(true);
+		t.start();
+
+		new Thread() {
+			public void run() {
+				byte[] buffer = new byte[10];
+				int count;
+				try {
+					do {
+
+						while ((count = System.in.read(buffer)) == -1) {
+//							if (count == -1) {
+//								continue;
+//							}
+						}
+					} while (!System.lineSeparator().equals(
+							new String(buffer, 0, count, "cp1251")));
+				} catch (IOException ex) {
+					System.err.println("Spam IOexception in method main");
+				}
+				System.out.println("stopped");
+			}
+		}.start();
+	}
+}
+//	@Override
+//	public void run() {
+//		for (int i = 0; i < time.length; i++) {
+//			try {
+//				Thread.sleep(time[i]);
+//			} catch (InterruptedException e) {
+//				System.err.println("Thread:" + Thread.currentThread().getName()
+//						+ " is interrupted");
+//			}
+//			System.out.println(messages[i]);
+//		}
+//	}
+//
+//	public static void main(String[] args) {
+//		final Spam s = new Spam();
+//		s.start();
+//		
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				while (true) {
+//					Scanner in = new Scanner(System.in);
+//					try {
+//						sleep(100);
+//						in.nextLine();
+//						in.close();
+//						break;
+//					} catch (NoSuchElementException e) {
+//						continue;
+//					} catch (InterruptedException e) {
+//						continue;
+//					} 
+//				}
+//				System.out.println("stopped");
+//				s.interrupt();
+//			}
+//		}).start();
+//		
+//	}
+//
+//}

@@ -1,0 +1,374 @@
+package ua.nure.chekhunov.practice2;
+
+import java.util.Iterator;
+
+/*
+ * (non-Javadoc)
+ * 
+ * @see ua.nure.chekhunov
+ */
+public class StackImpl implements Stack {
+
+	private Node top;
+	private int size;
+
+	/**
+	 * {@link Object}.
+	 */
+	private Object[] arr = {};
+
+	public StackImpl() {
+		top = null;
+		size = 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	@Override
+	public void clear() {
+
+		arr = new Object[] {};
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	@Override
+	public int size() {
+		return toArray().length;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	@Override
+	public Iterator<Object> iterator() {
+		return new IteratorImpl();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	public Object[] toArray() {
+		Object[] array = this.arr;
+
+		return array;
+	}
+	@Override
+	public String toString() {
+		Iterator<Object> i = iterator();
+		StringBuilder sb = new StringBuilder();
+
+		if (!i.hasNext())
+			return "[]";
+
+		sb.append('[');
+		for (;;) {
+			Object e = i.next();
+			if (e == null) {
+				return "[]";
+			}
+			sb.append(e == this ? "(this Collection)" : e);
+			if (!i.hasNext())
+				return sb.append(']').toString();
+			sb.append(", ");
+		}
+	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see ua.nure.chekhunov
+//	 */
+//	@Override
+//	public String toString() {
+//
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("{");
+//		for (int i = 0; i < toArray().length; i++) {
+//			if (toArray()[i] == null) {
+//				sb.append("[" + "null" + "]");
+//				continue;
+//			}
+//			sb.append("[" + toArray()[i].toString() + "]");
+//		}
+//		sb.append("}");
+//		return sb.toString();
+//
+//	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	@Override
+	public void push(Object element) {
+		Object[] arr2 = new Object[arr.length + 1];
+		System.arraycopy(arr, 0, arr2, 0, arr.length);
+		arr2[arr2.length - 1] = element;
+		arr = arr2;
+		size++;
+//		Node nod = new Node();
+//		nod.setElement(element);
+//		nod.setNext(top);
+//		top = nod;
+//		size++;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	@Override
+	public Object pop() {
+		if (isEmpty()) {
+			System.out.println("Stack is empty");
+			System.exit(0);
+		}
+		Object obj = top.getElement();
+		top = top.getNext();
+		size--;
+		return obj;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	@Override
+	public Object top() {
+		if (isEmpty()) {
+			System.out.println("Stack is empty");
+			System.exit(0);
+		}
+		return top.getElement();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	public boolean isEmpty() {
+		if (top == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	private class IteratorImpl implements Iterator<Object> {
+		private boolean flag = true;
+
+		public boolean isFlag() {
+			return flag;
+		}
+
+		public void setFlag(boolean flag) {
+			this.flag = flag;
+		}
+
+		public int getPointer() {
+			return pointer;
+		}
+
+		public void setPointer(int pointer) {
+			this.pointer = pointer;
+		}
+
+		public boolean isNextOrPrevious() {
+			return nextOrPrevious;
+		}
+
+		public void setNextOrPrevious(boolean nextOrPrevious) {
+			this.nextOrPrevious = nextOrPrevious;
+		}
+
+		private int pointer = -1;
+		private boolean nextOrPrevious = false;
+
+		public boolean hasNext() {
+			if (pointer < toArray().length - 1) {
+				return true;
+			}
+			return false;
+		}
+
+		public Object next() {
+			flag = false;
+			nextOrPrevious = false;
+			return toArray()[++pointer];
+		}
+
+		public void remove() {
+			if (isFlag()) {
+				throw new IllegalStateException();
+			}
+			int i = 0;
+			if (!isNextOrPrevious()) {
+				i = pointer--;
+			} else {
+				i = ++pointer;
+			}
+			Object[] arr2 = new Object[arr.length - 1];
+			System.arraycopy(arr, 0, arr2, 0, i);
+			System.arraycopy(arr, i + 1, arr2, i, arr2.length - i);
+			arr = arr2;
+			flag = true;
+			if (isNextOrPrevious()) {
+				--pointer;
+			}
+		}
+
+		public ListIterator listIterator() {
+			return new ListIteratorImpl();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	private class ListIteratorImpl extends IteratorImpl implements ListIterator {
+
+		@Override
+		public boolean hasPrevious() {
+			if (getPointer() >= 0) {
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public Object previous() {
+			setFlag(false);
+			setNextOrPrevious(true);
+			setPointer(getPointer() - 1);
+			return toArray()[getPointer() + 1];
+		}
+
+		@Override
+		public void set(Object e) {
+			if (isFlag()) {
+				throw new IllegalStateException();
+			}
+			if (isNextOrPrevious()) {
+				toArray()[getPointer() + 1] = e;
+			}
+			if (!isNextOrPrevious()) {
+				toArray()[getPointer()] = e;
+			}
+			setFlag(true);
+		}
+
+		@Override
+		public void remove() {
+			if (isFlag()) {
+				throw new IllegalStateException();
+			}
+			super.remove();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	private class Node {
+		private Object element;
+		private Node next;
+
+		public Node() {
+
+		}
+
+		public Node(Object element, Node next) {
+			this.next = next;
+			this.element = element;
+		}
+
+		public Object getElement() {
+			return element;
+		}
+
+		public Node getNext() {
+			return next;
+		}
+
+		public void setElement(Object element) {
+			this.element = element;
+		}
+
+		public void setNext(Node next) {
+			this.next = next;
+		}
+
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		Stack stack = new StackImpl();
+
+		stack.push("A");
+		stack.push("B");
+		stack.push("C");
+		System.out.println(stack);
+
+//		stack.pop();
+//		stack.top();
+//		stack.clear();
+//		System.out.println(stack.size());
+//		System.out.println(stack.toString());
+//
+//		System.out.println("\nShow foreach iterator:");
+//		// foreach iterator
+//		for (Object o : stack) {
+//			System.out.print(o + " ");
+//		}
+//
+//		System.out.println("Show while iterator: ");
+//		Iterator<Object> it = stack.iterator();
+//		// while iterator
+//		while (it.hasNext()) {
+//			System.out.print(it.next() + " ");
+//		}
+//
+//		System.out.println("\nShow " + stack);
+//
+//		System.out.println("\nShow remove iterator \n: " + stack);
+//		Iterator<Object> it1 = stack.iterator();
+//		while (it1.hasNext()) {
+//			it1.next();
+//		}
+//
+//		System.out.println("\nShow remove iterator \n: " + stack);
+//		Iterator<Object> it2 = stack.iterator();
+//		while (it2.hasNext()) {
+//			it2.next();
+//			it2.remove();
+		}
+	}
+

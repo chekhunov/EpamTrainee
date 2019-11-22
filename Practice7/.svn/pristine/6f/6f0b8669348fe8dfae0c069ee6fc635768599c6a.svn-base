@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:Tariffs xmlns:tns="http://www.example.org/input"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/input input.xsd ">
+	<Tariff>
+		<OperatorName>Vodafon</OperatorName>
+		<TariffName>Business 60</TariffName>
+		<PayRoll>60.0</PayRoll>
+		<SmsPrice>10</SmsPrice>
+		<CallPrice>
+			<WithinNetworkCallPrice>0.9</WithinNetworkCallPrice>
+			<OutOfNetworkCallPrice>0.0</OutOfNetworkCallPrice>
+			<LandLineNumCallPrice>1.5</LandLineNumCallPrice>
+		</CallPrice>
+		<Parameters>
+			<LovelyNumberRresence>0994442544</LovelyNumberRresence>
+			<Tariffication>12</Tariffication>
+			<ConnectionPrice>0.6</ConnectionPrice>
+		</Parameters>
+	</Tariff>
+
+	<Tariff>
+		<OperatorName>tns:Kievstar</OperatorName>
+		<TariffName>tns:Business100</TariffName>
+		<PayRoll>100.0</PayRoll>
+		<SmsPrice>10.0</SmsPrice>
+		<CallPrice>
+			<WithinNetworkCallPrice>0.9</WithinNetworkCallPrice>
+			<OutOfNetworkCallPrice>0.0</OutOfNetworkCallPrice>
+			<LandLineNumCallPrice>1.0</LandLineNumCallPrice>
+		</CallPrice>
+		<Parameters>
+			<LovelyNumberRresence>0677775577</LovelyNumberRresence>
+			<Tariffication>60</Tariffication>
+			<ConnectionPrice>0.6</ConnectionPrice>
+		</Parameters>
+	</Tariff>
+</tns:Tariffs>

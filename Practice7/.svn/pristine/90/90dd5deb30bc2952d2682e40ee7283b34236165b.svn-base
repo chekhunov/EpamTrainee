@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/input"
+	xmlns:tns="http://www.example.org/input" elementFormDefault="qualified">
+
+	<element name="Tariffs">
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element name="Tariff" type="tns:Tariff" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="Tariff">
+		<sequence>
+			<element name="OperatorName" type="string" />
+			<element name="TariffName" type="string" />
+			<element name="PayRoll" type="float" />
+			<element name="SmsPrice" type="float" />
+			<element name="CallPrice" type="tns:CallPriceInfo" />
+			<element name="Parameters" type="tns:ParametersInfo" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ParametersInfo">
+		<sequence>
+			<element name="LovelyNumberRresence">
+				<simpleType>
+					<restriction base="decimal">
+						<minInclusive value="0" />
+						<maxInclusive value="999999999999" />
+					</restriction>
+				</simpleType>
+			</element>
+			<element name="Tariffication">
+				<simpleType>
+					<restriction base="decimal">
+						<enumeration value="12" />
+						<enumeration value="60" />
+					</restriction>
+				</simpleType>
+			</element>
+
+			<element name="ConnectionPrice">
+				<simpleType>
+					<restriction base=" decimal">
+						<minInclusive value="0" />
+						<maxInclusive value="9999" />
+					</restriction>
+				</simpleType>
+			</element>
+
+		</sequence>
+
+	</complexType>
+
+	<simpleType name="CallPrice">
+		<restriction base="float">
+			<minInclusive value="0" />
+			<maxInclusive value="99999" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="CallPriceInfo">
+		<sequence>
+			<element name="WithinNetworkCallPrice" type="tns:CallPrice" />
+			<element name="OutOfNetworkCallPrice" type="tns:CallPrice" />
+			<element name="LandLineNumCallPrice" type="tns:CallPrice" />
+		</sequence>
+	</complexType>
+
+</schema>

@@ -1,0 +1,38 @@
+package ua.nure.chekhunov.practice5;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.TimeUnit;
+
+public final class Part2 {
+
+	private static final InputStream STD_IN = System.in;
+
+	private static final long TIME_SLEEP = 2;
+
+	private static final String ECODING = "Cp1251";
+
+	private Part2() {
+		throw new UnsupportedOperationException("non instance Part2");
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		try {
+			
+			ByteArrayInputStream bais = new ByteArrayInputStream(System.lineSeparator().getBytes(ECODING));
+			
+			bais.skip(System.lineSeparator().length());
+			System.setIn(bais);
+			Spam.main(args);
+			TimeUnit.SECONDS.sleep(TIME_SLEEP);
+			System.err.println("Try to send enter");
+			bais.reset();
+			TimeUnit.MILLISECONDS.sleep(3);
+		} catch (UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			System.setIn(STD_IN);
+		}
+	}
+}

@@ -1,0 +1,59 @@
+package ua.nure.chekhunov.practice6.part1;
+
+import java.util.List;
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+/**
+ * @author chekhunov.
+ *
+ */
+public class WordContainer {
+
+	private List<Word> arr = new ArrayList<>();
+
+	public List<Word> getArr() {
+		return arr;
+	}
+
+	public void add(Word word) {
+		for (Word wordNew : arr) {
+			if (wordNew.getWord().equals(word.getWord())) {
+				wordNew.setFrequency(wordNew.getFrequency() + 1);
+				return;
+			}
+		}
+		arr.add(word);
+	}
+
+	public static void main(String[] args) {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		try {
+
+			while (true) {
+				String input = br.readLine();
+
+				if ("stop".equals(input)) {
+					br.close();
+				}
+				System.out.println(input);
+			}
+
+		} catch (IOException e) {
+			System.out.println("Exit!");
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:tariffs xmlns:tns="http://www.example.org/input"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/input input.xsd ">
+	<tariff>
+		<OperatorName>LifeCell</OperatorName>
+		<TariffName>life</TariffName>
+		<PayRoll>50.0</PayRoll>
+		<SmsPrice>11</SmsPrice>
+		<CallPrice>
+			<WithinNetworkCallPrice>3.0</WithinNetworkCallPrice>
+			<OutOfNetworkCallPrice>1.0</OutOfNetworkCallPrice>
+			<LandLineNumCallPrice>2.0</LandLineNumCallPrice>
+		</CallPrice>
+		<Parameters>
+			<LovelyNumberRresence>0634447744</LovelyNumberRresence>
+			<Tariffication>12</Tariffication>
+			<ConnectionPrice>0.6</ConnectionPrice>
+		</Parameters>
+	</tariff>
+
+	<tariff>
+		<OperatorName>Vodafon</OperatorName>
+		<TariffName>Business60</TariffName>
+		<PayRoll>60.0</PayRoll>
+		<SmsPrice>1.0</SmsPrice>
+		<CallPrice>
+			<WithinNetworkCallPrice>2.0</WithinNetworkCallPrice>
+			<OutOfNetworkCallPrice>1.0</OutOfNetworkCallPrice>
+			<LandLineNumCallPrice>3.0</LandLineNumCallPrice>
+		</CallPrice>
+		<Parameters>
+			<LovelyNumberRresence>0991115511</LovelyNumberRresence>
+			<Tariffication>60</Tariffication>
+			<ConnectionPrice>1.0</ConnectionPrice>
+		</Parameters>
+	</tariff>
+</tns:tariffs>

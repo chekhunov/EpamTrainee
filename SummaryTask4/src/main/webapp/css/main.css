@@ -1,0 +1,83 @@
+body {
+   background: url(../img/bg1.jpg) no-repeat;
+        -moz-background-size: 100%; /* Firefox 3.6+ */
+        -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+        -o-background-size: 100%; /* Opera 9.6+ */
+        background-size: 100%; /* Современные браузеры */
+
+}
+
+div.main-content {
+  padding: 20px 30px;
+}
+
+div.head-content {
+  border-radius:15px;
+  padding: 10px;
+  margin: 0 100px;
+  background:#f0f0f0;
+
+}
+
+div.head-content form {
+  padding:0;
+  margin: 0;
+}
+
+.logout {
+  float:right
+}
+
+div.rooms-table, div.paging {
+  width: 1000px ;
+  margin-left: auto;
+  margin-right: auto;
+}
+table{width:100%}
+
+div.small-table, div.small-paging {
+  width: 500px ;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.paging {
+  text-align: center;
+}
+div.error {
+  color: red;
+  font-weight: bold
+}
+div.form {
+  padding: 15px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+div.warning {
+  padding: 15px;
+  margin-left: 90px;
+  margin-right: auto;
+}
+div.head-main-content {
+  border-radius:15px;
+  padding: 10px;
+  margin: 0 100px;
+  background:#f0f0f0;
+  text-align: center;
+}
+
+div.head-main-content form {
+  padding: 5px;
+  margin: 0;
+}
+div.main-page {
+  padding: 15px;
+  text-align:center
+}
+div.comments {
+  font-weight: bold;
+}
+td {
+  text-align:center
+}

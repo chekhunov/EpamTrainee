@@ -1,0 +1,117 @@
+package ua.nure.chekhunov.practice4;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Implementation Part3.
+ *
+ * @author chekhunov.
+ */
+public final class Part3 {
+
+    /**
+     * Regular expression for data types: String, double, char, int.
+     */
+    protected static final Map<String, String> REGEX = new HashMap<>();
+    /**
+     * Key STOP.
+     */
+    private static final String STOP = "q";
+
+    /**
+     * Message output for enter command.
+     */
+    private static final String MESSAGE_ENTER;
+
+    static {
+        REGEX.put("String", "(\\p{L}{2,})");
+        REGEX.put("double", "([-+]?[0-9]*\\.\\d+)|([-+]?[0-9]+\\.)");
+        REGEX.put("char", "([\\p{L}])");
+        REGEX.put("int", "(?<=\\s|^)\\d+(?=\\s|$)");
+        MESSAGE_ENTER = "Enter type " + REGEX.keySet().toString() + " (" + STOP + " - quit): ";
+    }
+
+    /**
+     * @param regex
+     *            - regular expression.
+     * @param inputStr
+     *            - input text.
+     * @return selected types.
+     */
+    protected static String getResTypeParse(final String regex, final String inputStr) {
+        final Pattern pattern = Pattern.compile(regex);
+        final Matcher matcher = pattern.matcher(inputStr);
+        final StringBuilder res = new StringBuilder();
+        while (matcher.find()) {
+            res.append(matcher.group() + " ");
+        }
+        return res.toString().trim();
+    }
+
+    /**
+     * Output str on console.
+     *
+     * @param output
+     *            - str for output on console.
+     */
+    protected static void printConsole(final String output) {
+        System.out.println(output);
+    }
+
+    /**
+     * Search input type.
+     *
+     * @param path
+     *            - path to the file.
+     * @param encoding
+     *            - file encoding.
+     * @param input
+     *            - input text.
+     */
+    @SuppressWarnings("resource")
+    protected static void printType(final String path, final String encoding, final String input) {
+        final Scanner scan = new Scanner(System.in, encoding);
+        final StringBuilder str = new StringBuilder();
+        while (true) {
+            System.out.print(MESSAGE_ENTER);
+            str.append(scan.nextLine());
+            if (str.toString().trim().equals(STOP)) {
+                printConsole("Exit...");
+                break;
+            } else if (REGEX.get(str.toString()) == null) {
+                printConsole("There is no such type...");
+            } else {
+                printConsole(
+                        str.toString() + ": " + getResTypeParse(REGEX.get(str.toString()), input));
+            }
+            str.setLength(0);
+        }
+    }
+
+    /**
+     * Run execute.
+     *
+     * @param filePath
+     *            - path to the file.
+     * @param encoding
+     *            - file encoding.
+     * @throws IOException
+     *             - exceptions I/O.
+     */
+    public static void run(final String filePath, final String encoding) throws IOException {
+        final String strType = Part1.readFile(filePath, encoding);
+        printType(filePath, encoding, strType);
+    }
+
+    /**
+     * Default constructor.
+     */
+    protected Part3() {
+        throw new UnsupportedOperationException("Exeption implement Part3");
+    }
+}

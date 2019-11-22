@@ -1,0 +1,12 @@
+package ua.nure.chekhunov.practice1;
+
+public class Demo {
+
+	public static void main(String[] args) {
+		Part1.main(new String[] { "Hello World" });
+		Part2.sumNumber(new String[] { "5", "3" });
+		Part3.main(new String[] { "a", "b", "l", "g", "j", "d" });
+		Part4.main(new String[] { "33", "22" });
+		Part5.main(new String[] { "1234" });
+	}
+}

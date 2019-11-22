@@ -1,0 +1,191 @@
+table {
+    font-size: 17px;
+    border-radius: 10px;
+    border-spacing: 0;
+    text-align: center;
+    width: 100%;
+}
+
+th {
+    background: #333;
+    color: white;
+    text-shadow: 0 1px 1px #2D2020;
+    padding: 10px 20px;
+}
+
+th, td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: white;
+}
+
+th:first-child, td:first-child {
+    text-align: left;
+}
+
+th:first-child {
+    border-top-left-radius: 10px;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;
+    border-right: none;
+}
+
+td {
+    padding: 10px 20px;
+    background: rgba(175, 238, 238, 0.6);
+}
+
+tr:last-child td:first-child {
+    border-radius: 0 0 0 10px;
+}
+
+tr:last-child td:last-child {
+    border-radius: 0 0 10px 0;
+}
+
+tr td:last-child {
+    border-right: none;
+}
+
+.tableScroll {
+    height: 47%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+.processButton, .paymentButton, .completeButton, .block, .unblock, .showDetailsButton, .deleteOrderButton {
+    padding: 9px 15px;
+    margin: 0 0 0 0;
+    opacity: 0.7;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.processButton {
+    background-color: #32CD32;
+}
+
+.editButton, .deleteButton, .showRoomPrice, .deleteOrderButton {
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.tableImg {
+    width: 40px;
+    height: 32px;
+}
+
+.deleteOrderButton {
+    background-color: #f44336;
+}
+
+.paymentButton {
+    background-color: #40E0D0;
+}
+
+.completeButton {
+    background-color: #00FF00;
+}
+
+.block {
+    background-color: red;
+}
+
+.unblock {
+    background-color: #00FF00;
+}
+
+.blockedBtn a, .prcBtn a, .showPriceButton a {
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
+
+.showDetailsButton {
+    background-color: #008B8B;
+}
+
+
+
+.processButton:hover, .editButton:hover, .deleteButton:hover, .paymentButton:hover,
+.completeButton:hover, .showDetailsButton:hover, .block:hover, .unblock:hover, .showRoomPrice:hover, .deleteOrderButton:hover {
+    opacity: 1;
+}
+
+.addButton {
+    overflow: hidden;
+    background-color: #333;
+    opacity: 1;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    padding: 11px 18px;
+    margin: 2% 0 0 37%;
+}
+
+.addButton:hover {
+    background-color: #D3D3D3;
+    color:black;
+}
+
+.itemLimit a {
+    text-decoration: none;
+    overflow: hidden;
+    background-color: #778899;
+    opacity: 0.7;
+    float: right;
+    border: 0.5px solid black;
+    cursor: pointer;
+    color: white;
+    padding: 5px 8px;
+    margin: -10px 5px 5px;
+}
+
+.itemLimit a.active {
+    background-color: #DCDCDC;
+    color: black;
+}
+
+.itemLimit a:hover {
+    opacity: 1;
+}
+
+.pages {
+    margin: 2% 0 0;
+}
+
+.pages a {
+    text-decoration: none;
+    color: black;
+    padding: 2px 4px;
+
+    border: 1px solid black;
+}
+
+.pages a:hover {
+    background-color: #DCDCDC;
+    opacity: 1;
+}
+
+.priceLabel {
+    font-size: 25px;
+    margin: -4% 35% 3%;
+}
+
+.returnPriceLabel a {
+    text-decoration: none;
+    color: black;
+}
+
+.returnPriceLabel {
+    font-size: 18px;
+    padding: 2% 0 1%;
+}

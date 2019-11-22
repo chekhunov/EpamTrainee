@@ -1,0 +1,4 @@
+2019-11-14 13:57:46,867 INFO  [AuthenticationFilter] - /authentication
+2019-11-14 13:57:48,811 INFO  [AuthenticationFilter] - /authentication
+2019-11-14 13:57:52,367 INFO  [AuthenticationFilter] - /admin
+2019-11-14 13:57:53,931 INFO  [AuthenticationFilter] - /users_list

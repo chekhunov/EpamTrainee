@@ -1,0 +1,60 @@
+package ua.nure.chekhunov.practice3;
+
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * @author chekhunov
+ *
+ */
+public final class Part3 {
+    private static final String LS = System.lineSeparator();
+
+    /**
+     * Default constructor.
+     */
+    private Part3() {
+        throw new UnsupportedOperationException("Subtask03");
+    }
+    
+    public static String convert(String input) {
+        String word;
+        String pre;
+        String post;
+        String first = "";
+        String lowerCase = "";
+        String upperCase = "";
+        StringBuffer out = new StringBuffer();
+        StringBuilder transWord;
+        String letter = "a-zA-Z\\p{InCyrillic}";
+        String regex = "(^|[^" + letter + "]*)([" + letter + "]+)([^" + letter + "]*|$)";
+
+        Matcher m = Pattern.compile(regex).matcher(input);
+        while (m.find()) {
+            pre = m.group(1);
+            word = m.group(2);
+            post = m.group(3);
+            transWord = new StringBuilder(pre);
+            if (word.length() > 2) {
+                first = word.substring(0, 1);
+                lowerCase = first.toLowerCase(Locale.getDefault());
+                upperCase = first.toUpperCase(Locale.getDefault());
+                first = (!first.equals(lowerCase)) ? lowerCase : upperCase;
+                transWord.append(first).append(word.substring(1));
+            } else {
+                transWord.append(word);
+            }
+            transWord.append(post);
+            m.appendReplacement(out, transWord.toString());
+        }
+        m.appendTail(out);
+
+        String outString = out.toString();
+        if (outString.endsWith(LS)) {
+            outString = outString.trim();
+        }
+
+        return outString;
+    }
+}

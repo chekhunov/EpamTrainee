@@ -1,0 +1,50 @@
+package ua.nure.chekhunov.practice3;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Part3 {
+    /**
+     * Regex for search word.
+     */
+    private static final String REGEX = "([\\p{L}\\p{Nd}]+\\s*)";
+    /**
+     * {@link Pattern}.
+     */
+    private static final Pattern PATTERN;
+
+    static {
+        PATTERN = Pattern.compile(REGEX);
+    }
+
+    /**
+     * Default constructor.
+     * 
+     * @throws UnsupportedOperationException
+     *             - if create instance Part3.
+     */
+    private Part3() {
+        throw new UnsupportedOperationException("non instance Part3");
+    }
+
+    /**
+     * Changes first char words to upper case.
+     * 
+     * @param input
+     *            - string input data.
+     * @return string where first char words to upper case.
+     */
+    public static String convert(final String input) {
+        Matcher matcher = PATTERN.matcher(input);
+        StringBuilder builder = new StringBuilder();
+        StringBuilder temp = new StringBuilder();
+        while (matcher.find()) {
+            temp.append(matcher.group());
+            temp.setCharAt(0, String.valueOf(temp.charAt(0)).toUpperCase().charAt(0));
+            builder.append(temp);
+            temp.setLength(0);
+        }
+        
+        return builder.substring(0, 1).toLowerCase() + builder.substring(1);
+    }
+}

@@ -1,0 +1,64 @@
+package ua.nure.chekhunov.practice5;
+
+/**
+ * @author chekhunov.
+ *
+ */
+public class Part6 {
+    private static final Object M = new Object();
+    private static boolean flag = true;
+    private static final long TIME_SLEEP = 10;
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                synchronized (M) {
+                    try {
+                        while (flag) {
+                            M.wait();
+                        }
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        };
+
+        t.start();
+
+        synchronized (M) {
+            M.notifyAll();
+
+            while (t.getState() != Thread.State.BLOCKED) {
+            }
+
+            System.out.println(t.getState());
+        }
+
+        synchronized (M) {
+            while (t.getState() != Thread.State.WAITING) {
+                M.wait(TIME_SLEEP);
+            }
+        }
+
+        synchronized (M) {
+            while (t.getState() != Thread.State.WAITING) {
+            }
+
+            System.out.println(t.getState());
+
+            M.notifyAll();
+        }
+
+        flag = false;
+
+        t.join();
+
+        System.out.println(t.getState());
+        
+        flag = true;
+    }
+}

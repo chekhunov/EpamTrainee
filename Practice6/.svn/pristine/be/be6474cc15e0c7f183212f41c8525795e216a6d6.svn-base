@@ -1,0 +1,25 @@
+package ua.nure.chekhunov.practice6.part6;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+public final class FileRead {
+	
+	private FileRead() {
+		throw new UnsupportedOperationException("no instance FileRead");
+	}
+
+	public static String read(final File fileName, final String encoding)
+			throws FileNotFoundException {
+		StringBuilder readStr = new StringBuilder();
+		try (Scanner scan = new Scanner(new FileInputStream(fileName), encoding)) {
+			while (scan.hasNextLine()) {
+				readStr.append(scan.nextLine()).append(System.lineSeparator());
+			}
+		}
+		return readStr.toString().trim();
+	}
+}

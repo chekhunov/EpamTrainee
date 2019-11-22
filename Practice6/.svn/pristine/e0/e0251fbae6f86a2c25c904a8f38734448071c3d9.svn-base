@@ -1,0 +1,132 @@
+package ua.nure.chekhunov.practice6.part2;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * @author chekhunov.
+ *
+ */
+public class Part2 {
+	/**
+	 * Count element.
+	 */
+	private static final int N = 10000;
+	/**
+	 * Deleted K element.
+	 */
+	private static final int K = 4;
+
+	/**
+	 * List length.
+	 */
+	private final int listLength;
+
+	private List<Integer> circleInArray;
+	private List<Integer> circleInLinked;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param listLength - list length.
+	 */
+	private Part2(int listLength) {
+		this.listLength = listLength;
+	}
+
+	/**
+	 * Main method.
+	 * 
+	 * @param args argument main.
+	 */
+	public static void main(String[] args) {
+
+		Part2 part2 = new Part2(N);
+
+		System.out.print("ArrayList#Index:" + " ");
+		System.out.println(removeByIndex(part2.getCircleInArray(), K) + " ms");
+		System.out.print("LinkedList#Index:" + " ");
+		System.out.println(removeByIndex(part2.getCircleInLinked(), K) + " ms");
+
+		System.out.print("ArrayList#Iterator:" + " ");
+		System.out.println(removeByIterator(part2.getCircleInArray(), K) + " ms");
+		System.out.print("LinkedList#Iterator:" + " ");
+		System.out.println(removeByIterator(part2.getCircleInLinked(), K) + " ms");
+
+	}
+
+	public static long removeByIterator(List list, int k) {
+
+		long time = System.currentTimeMillis();
+		int count = 0;
+		Iterator<Integer> it = list.iterator();
+		while (list.size() > 1) {
+			if (it.hasNext()) {
+				it.next();
+				count++;
+				if (count == k) {
+					it.remove();
+					count = 0;
+				}
+			} else {
+				it = list.iterator();
+			}
+		}
+		return System.currentTimeMillis() - time;
+	}
+
+	/**
+	 * Delete item for input list.
+	 * 
+	 * @param list - input list.
+	 * @param k    - delete k element.
+	 */
+	public static long removeByIndex(List<Integer> list, int k) {
+
+		if (0 > k || k > list.size()) {
+			throw new IllegalArgumentException(k + " does not match: 0 < k < n");
+		}
+		int count = 0;
+		int kNum = 1; 
+		long milis = System.currentTimeMillis();
+		if(k>1) {
+			kNum = k-1;
+		}
+			
+		for (int i = 0; list.size() > 1; count++, i++, i = i % list.size()) {
+			if (count == kNum) {
+				list.remove(i);
+				count = 0;
+			}
+		}
+		milis = (System.currentTimeMillis() - milis);
+		return milis;
+	}
+
+	public List<Integer> getCircleInArray() {
+		circleInArray = new ArrayList<>();
+		for (int i = 0; i < listLength; i++) {
+			circleInArray.add(i);
+		}
+		return circleInArray;
+	}
+
+	public void setCircleInArray(List<Integer> circleInArray) {
+		this.circleInArray = circleInArray;
+	}
+
+	public List<Integer> getCircleInLinked() {
+		circleInLinked = new LinkedList<>();
+		for (int i = 0; i < listLength; i++) {
+			circleInLinked.add(i);
+		}
+		return circleInLinked;
+	}
+
+	public void setCircleInLinked(List<Integer> circleInLinked) {
+		this.circleInLinked = circleInLinked;
+	}
+
+}

@@ -1,0 +1,46 @@
+body{
+    background-image: url(../img/bg12.jpg);
+    background-size: cover;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.leftColumn {
+    float: left;
+    width: 25%;
+    padding: 20px;
+}
+
+.rightColumn {
+    overflow: hidden;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    float: left;
+    width: 75%;
+    background-color:rgba(105, 105, 105, 0.5);
+    padding: 20px;
+
+}
+
+#completed{
+    position:center;
+    margin: 5% 10%;
+    width: 55%;
+}
+
+
+.data {
+    margin-top: 6px;
+    float: left;
+}
+
+
+

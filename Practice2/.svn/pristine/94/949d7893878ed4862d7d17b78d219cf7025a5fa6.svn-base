@@ -1,0 +1,585 @@
+package ua.nure.chekhunov.practice2;
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class ListImpl implements List {
+
+	//List list = new ListImpl();
+
+	private Node first;
+	private Node last;
+	private int size;
+
+	/**
+	 * {@link Object}.
+	 */
+	private Object[] arr = {};
+
+	/**
+	 * Current capacity for creation array.
+	 */
+	private final int capacity;
+
+	/**
+	 * Mod count.
+	 */
+	private int modCount;
+
+	/**
+	 * Current position to index array.
+	 */
+	private int pointer;
+
+	{
+		modCount = 0;
+		pointer = 0;
+		capacity = 0;
+	}
+
+	public ListImpl() {
+		this.first = this.last = null;
+		this.size = 0;
+	}
+
+	public void addArrayToList(Object[] array) {
+		int ar = array.length;
+		for (Object t : array) {
+			addLast(t);
+		}
+		this.size = ar;
+	}
+
+	@Override
+	public void clear() {
+		List list = new ListImpl();
+	}
+
+	@Override
+	public int size() {
+		return this.size;
+	}
+
+	@Override
+	public Iterator<Object> iterator() {
+
+		return new IteratorImpl();
+	}
+
+	@Override
+	public void addFirst(Object element) {
+		Node list = new Node(element);
+		list.element = element;
+
+		if (this.first == null) {
+			this.first = list;
+			this.last = list;
+		} else {
+			list.next = this.first;
+			this.first = list;
+		}
+		this.size++;
+
+	}
+
+	@Override
+	public void addLast(Object element) {
+		Node node = new Node(element);
+		if (this.first == null) {
+			this.first = this.last = node;
+		} else {
+			this.last.setNext(node);
+			this.last = node;
+		}
+		this.size++;
+	}
+
+	@Override
+	public void removeFirst() {
+		if (this.first == null) {
+			this.first = this.last = null;
+		} else {
+			Node temp = this.first;
+			this.first = first.getNext();
+			temp.setNext(null);
+			size--;
+		}
+	}
+
+	@Override
+	public void removeLast() {
+		Node temp = null;
+
+		for (temp = this.first; temp.next.next != null; temp = temp.next) {
+
+		}
+
+		temp.next = null;
+		size--;
+	}
+
+	@Override
+	public Object getFirst() {
+		final Node e = first;
+		if (e == null) {
+			throw new NoSuchElementException();
+		}
+		return e.element;
+	}
+
+	public void isEmpty() {
+		if (this.first != null) {
+			System.out.println("Список не пуст");
+		} else
+			System.out.println("Список пуст");
+	}
+
+	@Override
+	public Object getLast() {
+		final Node e = last;
+		if (e == null) {
+			throw new NoSuchElementException();
+		}
+		return e.element;
+	}
+
+	@Override
+	public Object search(Object element) {
+		Node e = first;
+		while (e != null && e.getData() != element) {
+			e = e.getNext();
+		}
+		return e;
+	}
+
+	@Override
+	public boolean remove(Object element) {
+		if (this.first == null) {
+			throw new NoSuchElementException();
+		} else if (this.first.getData().equals(element)) {
+			this.first = this.first.getNext();
+			this.size--;
+			return true;
+		}
+
+		Node current = this.first;
+		Node next = current.getNext();
+		while (next != null) {
+			if (next.getData().equals(element)) {
+				current.setNext(next.getNext());
+				if (current.getNext() == null) {
+					this.last = current;
+				}
+				this.size--;
+				return true;
+			}
+			current = next;
+			next = current.getNext();
+		}
+
+		throw new
+
+		NoSuchElementException();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	@Override
+	public String toString() {
+		if (this.first == null) {
+			return "[ ]";
+		}
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("{");
+
+		Node current = this.first;
+		while (current != null) {
+			buffer.append(current.getData());
+
+			if (current.getNext() != null) {
+				buffer.append(", ");
+			}
+
+			current = current.getNext();
+		}
+
+		buffer.append("}");
+
+		return buffer.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+
+	public Object[] toArray() {
+
+		Object[] array = this.arr;
+
+		return array;
+	}
+
+	private static class Node {
+
+		private Object element;
+		private Node next;
+		private Node prev;
+
+		public Node(Object element) {
+			this.element = element;
+			this.next = null;
+		}
+
+		public Node(Object element, Node prev, Node next) {
+			this.element = element;
+			this.next = next;
+			this.prev = prev;
+		}
+
+		public void setData(Object element) {
+			this.element = element;
+		}
+
+		public Object getData() {
+			return this.element;
+		}
+
+		public void setNext(Node next) {
+			this.next = next;
+		}
+
+		public Node getNext() {
+			return this.next;
+		}
+
+		public Node getPrev() {
+			return prev;
+		}
+
+		public void setPrev(Node prev) {
+			this.prev = prev;
+		}
+	}
+
+	
+	private class IteratorImpl implements Iterator<Object> {
+
+		private int expectedModCount;
+		private int currentIndex = 0;
+		private int pointer = -1;
+		private boolean nextOrPrevious = false;
+		private boolean flag = true;
+
+		{
+			expectedModCount = ListImpl.this.modCount;
+		}
+
+		public int getPointer() {
+			return pointer;
+		}
+
+		public void setPointer(int pointer) {
+			this.pointer = pointer;
+		}
+
+		public boolean isNextOrPrevious() {
+			return nextOrPrevious;
+		}
+
+		public void setNextOrPrevious(boolean nextOrPrevious) {
+			this.nextOrPrevious = nextOrPrevious;
+		}
+
+		public boolean isFlag() {
+			return flag;
+		}
+
+		public void setFlag(boolean flag) {
+			this.flag = flag;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see ua.nure.chekhunov
+		 */
+		@Override
+		public boolean hasNext() {
+
+			if (pointer < toArray().length - 1) {
+				return true;
+			}
+			return false;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see ua.nure.chekhunov
+		 */
+		@Override
+		public Object next() {
+
+			flag = false;
+			nextOrPrevious = false;
+			return toArray()[++pointer];
+
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see ua.nure.chekhunov
+		 */
+		@Override
+		public void remove() {
+
+			if (pointer < 0) {
+				throw new IllegalStateException("remove: Not does not indicate which item");
+			}
+			checkForComodification();
+			ListImpl.this.remove(pointer);
+			if (pointer < currentIndex) {
+				currentIndex--;
+			}
+			expectedModCount = modCount;
+			pointer = -1;
+		}
+
+		/**
+		 * Check modifications object state.
+		 */
+		final void checkForComodification() {
+
+			if (modCount != expectedModCount) {
+				throw new ConcurrentModificationException();
+			}
+		}
+
+	}
+	
+	
+	
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see ua.nure.chekhunov
+//	 */
+//	private class IteratorImpl implements Iterator<Object> {
+//
+//		/**
+//		 * Expected modifications count.
+//		 */
+//		private int expectedModCount;
+//		/**
+//		 * Current index iterator.
+//		 */
+//		private int currentIndex;
+//
+//		/**
+//		 * Index last return item.
+//		 */
+//		private int lastRet;
+//
+//		{
+//			expectedModCount = ListImpl.this.modCount;
+//			currentIndex = 0;
+//			lastRet = -1;
+//		}
+//
+//		/**
+//		 * Getter {@link IteratorImpl#expectedModCount}.
+//		 * 
+//		 * @return the expectedModCount.
+//		 */
+//		@SuppressWarnings("unused")
+//		public final int getExpectedModCount() {
+//			return expectedModCount;
+//		}
+//
+//		/**
+//		 * Setter {@link IteratorImpl#expectedModCount}.
+//		 * 
+//		 * @param expectedModCount the expectedModCount to set.
+//		 */
+//		@SuppressWarnings("unused")
+//		public final void setExpectedModCount(final int expectedModCount) {
+//			this.expectedModCount = expectedModCount;
+//		}
+//
+//		/**
+//		 * Getter {@link IteratorImpl#currentIndex}.
+//		 * 
+//		 * @return the currentIndex.
+//		 */
+//		public final int getCurrentIndex() {
+//			return currentIndex;
+//		}
+//
+//		/**
+//		 * Setter {@link IteratorImpl#currentIndex}.
+//		 * 
+//		 * @param currentIndex the currentIndex to set.
+//		 */
+//		public final void setCurrentIndex(int currentIndex) {
+//			this.currentIndex = currentIndex;
+//		}
+//
+//		/**
+//		 * Getter {@link IteratorImpl#lastRet}.
+//		 * 
+//		 * @return the lastRet.
+//		 */
+//		public final int getLastRet() {
+//			return lastRet;
+//		}
+//
+//		/**
+//		 * Setter {@link IteratorImpl#lastRet}.
+//		 * 
+//		 * @param lastRet the lastRet to set.
+//		 */
+//		public final void setLastRet(final int lastRet) {
+//			this.lastRet = lastRet;
+//		}
+//
+//		/*
+//		 * (non-Javadoc)
+//		 * 
+//		 * @see java.util.Iterator#hasNext()
+//		 */
+//		@Override
+//		public boolean hasNext() {
+//			return currentIndex != size();
+//		}
+//
+//		/*
+//		 * (non-Javadoc)
+//		 * 
+//		 * @see java.util.Iterator#next()
+//		 */
+//		@Override
+//		public Object next() {
+//			if (currentIndex >= size()) {
+//				throw new NoSuchElementException("Error No Such Element from next");
+//			}
+//			checkForComodification();
+//			lastRet = currentIndex;
+//			currentIndex++;
+//			return lastRet;
+//		}
+//
+//		/*
+//		 * (non-Javadoc)
+//		 * 
+//		 * @see java.util.Iterator#remove()
+//		 */
+//		@Override
+//		public void remove() {
+//			if (lastRet < 0) {
+//				throw new IllegalStateException("remove: Not does not indicate which item");
+//			}
+//			checkForComodification();
+//			ListImpl.this.remove(lastRet);
+//			if (lastRet < currentIndex) {
+//				currentIndex--;
+//			}
+//			expectedModCount = modCount;
+//			lastRet = -1;
+//		}
+//
+//		/**
+//		 * Check modifications object state.
+//		 */
+//		final void checkForComodification() {
+//			if (modCount != expectedModCount) {
+//				throw new ConcurrentModificationException();
+//			}
+//		}
+//	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	public static void main(String[] args) {
+test1();
+
+List list1 = new ListImpl();
+String[] coolStringArray = new String[] { "Java", "Scala", "Groovy" };
+Object[] her = new Object[] { "Hren" };
+
+
+System.out.println(list1 + " addArrayToList");
+list1.addLast("A");
+System.out.println(list1 + " addLast");
+list1.addFirst("B");
+list1.addFirst("C");
+System.out.println(list1 + " addFirst");
+
+list1.clear();
+System.out.println(list1 + " clear");
+list1.addFirst("A");
+list1.addFirst("B");
+list1.addFirst("C");
+System.out.println(list1 + "addFirst");
+System.out.println(list1.size());
+list1.removeFirst();
+System.out.println(list1 + " removeFirst");
+list1.addLast("P");
+list1.removeLast();
+System.out.println(list1 + " removeLast");
+System.out.println(list1.getFirst() + " getFirst");
+System.out.println(list1.getLast() + " getLast");
+System.out.println(list1.search("K") + " search");
+System.out.println(list1);
+list1.remove("B");
+System.out.println(list1.toString());
+
+System.out.println("Show while iterator: ");
+Iterator<Object> it = list1.iterator();
+// while iterator
+while (it.hasNext()) {
+	System.out.print(it.next() + " ");
+}
+
+System.out.println("\nShow remove iterator \n: " + list1);
+Iterator<Object> it1 = list1.iterator();
+while (it1.hasNext()) {
+	it1.next();
+}}
+	
+		public static void test1() {
+
+			List queue = new ListImpl();
+			Class<? extends List> c = (Class<? extends List>) queue.getClass();
+
+			// must be 1
+			System.out.println(c.getInterfaces().length);
+
+			// must be Queue
+			System.out.println(c.getInterfaces()[0].getSimpleName());
+
+			// must be 1
+			System.out.println(c.getInterfaces()[0].getInterfaces().length);
+
+			// must be Container
+			System.out.println(c.getInterfaces()[0].getInterfaces()[0].getSimpleName());
+
+			// must be 1
+			System.out.println(c.getInterfaces()[0].getInterfaces()[0].getInterfaces().length);
+
+			// must be java.lang.Iterable
+			System.out.println(c.getInterfaces()[0].getInterfaces()[0].getInterfaces()[0].getName());
+		}	
+
+	}
+
+

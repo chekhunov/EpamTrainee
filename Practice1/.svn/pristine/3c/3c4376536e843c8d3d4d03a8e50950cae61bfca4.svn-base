@@ -1,0 +1,21 @@
+package ua.nure.chekhunov.practice1;
+
+public class Demo {
+
+	public static void main(String[] args) {
+		Part1.main(new String[] { "Hello World" });
+		Part2.main(new String[] { "2","3","7","8","9" });
+		Part3.main(new String[] { "a", "b", "l", "g", "j", "d" });
+		Part4.main(new String[] { "33", "22" });
+		Part5.main(new String[] { "1234" });
+		Part6.main(new String[] { "2" });
+		Part7.main(new String[] {"1", "A", "A"});
+//		Part7.main(new String[] {"2", "B", "B"});
+//		Part7.main(new String[] {"26", "Z", "Z"});
+//		Part7.main(new String[] {"27", "AA", "AA"});
+//		Part7.main(new String[] {"52", "AZ", "AZ"});
+//		Part7.main(new String[] {"53", "BA", "BA"});
+//		Part7.main(new String[] {"702", "ZZ", "ZZ"});
+//		Part7.main(new String[] {"703", "AAA", "AAA"});
+	}
+}

@@ -1,0 +1,100 @@
+package ua.nure.chekhunov.practice3;
+
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.rmi.CORBA.Util;
+
+public class Part3 {
+    private static final String LS = System.lineSeparator();
+//    private static String fPath = "part3.txt";
+
+    public static String convert(String input) {
+        String word;
+        String pre;
+        String post;
+        String first = "";
+        String lowerCase = "";
+        String upperCase = "";
+        StringBuffer out = new StringBuffer();
+        StringBuilder transWord;
+        String letter = "a-zA-Z\\p{InCyrillic}";
+        String regex = "(^|[^" + letter
+                + "]*)([" + letter + "]+)([^" + letter + "]*|$)";
+
+        Matcher m = Pattern.compile(regex).matcher(input);
+        while (m.find()) {
+            pre = m.group(1);
+            word = m.group(2);
+            post = m.group(3);
+            transWord = new StringBuilder(pre);
+            if (word.length() > 2) {
+                first = word.substring(0, 1);
+                lowerCase = first.toLowerCase(Locale.getDefault());
+                upperCase = first.toUpperCase(Locale.getDefault());
+                first = (!first.equals(lowerCase))
+                        ? lowerCase : upperCase;
+                transWord.append(first).append(word.substring(1));
+            } else {
+                transWord.append(word);
+            }
+            transWord.append(post);
+            m.appendReplacement(out, transWord.toString());
+        }
+        m.appendTail(out);
+
+        String outString = out.toString();
+        if (outString.endsWith(LS)) {
+            outString = outString.trim();
+        }
+
+        return outString;
+    }}
+
+//    public static void main(String[] args) {
+//        String s = Util.readFile(fPath);
+//
+//        System.out.println(convert(s));
+//        System.out.println();
+//    }
+//}
+
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
+//
+//public class Part3 {
+//    /**
+//     * Regex for search word.
+//     */
+//    private static final String REGEX = "([\\p{L}\\p{Nd}]+\\s*)";
+//    /**
+//     * {@link Pattern}.
+//     */
+//    private static final Pattern PATTERN;
+//
+//    static {
+//        PATTERN = Pattern.compile(REGEX);
+//    }
+//
+//    /**
+//     * Changes first char words to upper case.
+//     * 
+//     * @param input
+//     *            - string input data.
+//     * @return string where first char words to upper case.
+//     */
+//    public static String convert(final String input) {
+//        Matcher matcher = PATTERN.matcher(input);
+//        StringBuilder builder = new StringBuilder();
+//        StringBuilder temp = new StringBuilder();
+//        while (matcher.find()) {
+//            temp.append(matcher.group());
+//            temp.setCharAt(0, String.valueOf(temp.charAt(0)).toUpperCase().charAt(0));
+//            builder.append(temp);
+//            temp.setLength(0);
+//        }
+//        
+//        return builder.toString();
+//    }
+//}

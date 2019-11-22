@@ -1,0 +1,34 @@
+package ua.nure.chekhunov.practice4;
+
+import java.io.IOException;
+
+/**
+ * Show working {@link Parser}.
+ *
+ * @author chekhunov.
+ */
+public class Part4 {
+    /**
+     * Path to the file.
+     */
+    private static final String FILE_NAME = "part4.txt";
+    /**
+     * Encoding file.
+     */
+    private static final String ENCODING = "Cp1251";
+
+    /**
+     * Main method.
+     *
+     * @param args
+     *            - arg main method.
+     * @throws IOException
+     *             - exception I/O.
+     */
+    public static void main(final String[] args) throws IOException {
+        final Parser parser = new Parser(FILE_NAME, ENCODING);
+        for (final String str : parser) {
+            System.out.println(str);
+        }
+    }
+}

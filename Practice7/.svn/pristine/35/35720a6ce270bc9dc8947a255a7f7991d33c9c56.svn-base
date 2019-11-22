@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/input" xmlns:tns="http://www.example.org/input">
+
+	<xsd:element name="tariffs">
+        <xsd:complexType>
+			<xsd:sequence> 
+				<xsd:element name="tariff" type="tns:tariff" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+
+	<xsd:complexType name="tariff">
+		<xsd:sequence>
+			<xsd:element name="OperatorName" type="xsd:string" />
+			<xsd:element name="TariffName" type="xsd:string" />
+			<xsd:element name="PayRoll" type="xsd:float" />
+			<xsd:element name="SmsPrice" type="xsd:float" />
+			<xsd:element name="CallPrice" type="tns:CallPriceInfo" />
+			<xsd:element name="Parameters" type="tns:ParametersInfo" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ParametersInfo">
+		<xsd:sequence>
+			<xsd:element name="LovelyNumberRresence">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:decimal">
+						<xsd:minInclusive value="0" />
+						<xsd:maxInclusive value="9999" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Tariffication">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:decimal">
+						<xsd:enumeration value="12" />
+						<xsd:enumeration value="60" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+
+			<xsd:element name="ConnectionPrice">
+				<xsd:simpleType>
+					<xsd:restriction base=" xsd:decimal">
+						<xsd:minInclusive value="0" />
+						<xsd:maxInclusive value="9999" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+
+		</xsd:sequence>
+
+	</xsd:complexType>
+
+	<xsd:simpleType name="CallPrice">
+		<xsd:restriction base="xsd:float">
+			<xsd:minInclusive value="0" />
+			<xsd:maxInclusive value="99999" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="CallPriceInfo">
+		<xsd:sequence>
+			<xsd:element name="WithinNetworkCallPrice" type="tns:CallPrice" />
+			<xsd:element name="OutOfNetworkCallPrice" type="tns:CallPrice" />
+			<xsd:element name="LandLineNumCallPrice" type="tns:CallPrice" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

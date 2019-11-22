@@ -1,0 +1,11 @@
+package ua.nure.chekhunov.practice6.part6;
+
+
+public class PrinterConsole implements Printer {
+
+	
+	@Override
+	public void show(final String str) {
+		System.out.print(str);
+	}
+}

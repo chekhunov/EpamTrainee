@@ -1,0 +1,117 @@
+package ua.nure.chekhunov.practice6.part3;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Parking {
+
+	int n = 4;
+
+	private static final int FLAG_CAR = 1;
+
+	private static List<Integer> value;
+
+	public Parking() {
+		value = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			value.add(null);
+		}
+	}
+
+	public boolean arrive(int k) {
+		int size = value.size();
+
+		if (specificPlace(k)) {
+
+			switch (k) {
+
+			case (2):
+
+				if (findPlace(2)) {
+
+					break;
+				}
+			case (3):
+				if (findPlace(3)) {
+
+					break;
+				} else {
+				}
+			case (4):
+				if (findPlace(0)) {
+					break;
+				} else {
+				}
+			case (1):
+				if (findPlace(1)) {
+					break;
+				} else {
+				}
+//			default:
+//				if (findPlace(1)) {
+//					break;
+//				}
+			}
+		} else {
+			return false;
+		}
+//			if (findPlace(k, size)) {
+//				
+//			} else {
+//				if(findPlace(0, k)) {
+//					
+//				}
+//				else {
+//					if(findPlace(1, k)) {
+//						
+//					}
+//			}
+//		}
+//		
+		return true;
+	}
+
+	private boolean specificPlace(int k) {
+		if (k <= 0 || k > n) {
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean findPlace(int k) {
+
+		for (int i = k; i < value.size(); i++) {
+
+			Integer carAtParking = value.get(i);
+
+			if (carAtParking == null) {
+				value.set(k, FLAG_CAR);
+
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean depart(int k) {
+
+		for (int i = 0; i < value.size(); i++) {
+			Integer carAtParking = value.get(i);
+			if (k == carAtParking) {
+				value.set(i, null);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("// ");
+		for (Integer car : value) {
+			sb = (car == null) ? sb.append("0") : sb.append("").append(car).append("");
+		}
+		return sb.toString();
+	}
+}

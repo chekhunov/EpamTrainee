@@ -1,0 +1,124 @@
+package ua.nure.chekhunov.practice4;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Implementation  "Parser".
+ *
+ * @author chekhunov.
+ */
+public class Parser implements Iterable<String>, Serializable {
+    /**
+     * Implementation IteratorImp.<br>
+     * IteratorImp implements {@link Iterator}.
+     *
+     * @author chekhunov.
+     */
+    private class IteratorImp implements Iterator<String> {
+        /**
+         * Regex for word search.
+         */
+        private static final String REGEX = "([\\p{L}][^\\.!?]*[\\.!?([\\p{L}])])";
+
+        /**
+         * {@link Matcher}.
+         */
+        private final Matcher matcher;
+        /**
+         * {@link Pattern}.
+         */
+        private final Pattern pattern;
+
+        /**
+         * Result searching.
+         */
+        private boolean resFind;
+        /**
+         * Flag next item.
+         */
+        private boolean isFlagNext = false;
+
+        {
+            pattern = Pattern.compile(REGEX);
+            matcher = pattern.matcher(textFile);
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see java.util.Iterator#hasNext()
+         */
+        @Override
+        public boolean hasNext() {
+            if (!isFlagNext) {
+                resFind = matcher.find();
+                isFlagNext = true;
+            }
+            return resFind;
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see java.util.Iterator#next()
+         */
+        @Override
+        public String next() {
+            String res;
+            if (isFlagNext) {
+                isFlagNext = false;
+            } else {
+                resFind = matcher.find();
+            }
+            if (!resFind) {
+                throw new NoSuchElementException("No found next item");
+            }
+            res = matcher.group();
+            return res;
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see java.util.Iterator#remove()
+         */
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
+    }
+    private static final long serialVersionUID = 478776519760957689L;
+    /**
+     * Read data.
+     */
+    private final String textFile;
+
+    /**
+     * Constructor with parameters.
+     *
+     * @param path
+     *            - path to the file.
+     * @param encoding
+     *            - encoding file
+     * @throws IOException
+     *             - exception I/o.
+     */
+    public Parser(final String path, final String encoding) throws IOException {
+        textFile = Part1.readFile(path, encoding);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<String> iterator() {
+        return new IteratorImp();
+    }
+}

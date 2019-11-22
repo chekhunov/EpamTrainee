@@ -1,0 +1,39 @@
+package ua.nure.chekhunov.practice6.part6;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class Part61 extends Command {
+
+	
+	public Part61(final String inputStr, final int count, final Printer printer) {
+		super(printer, inputStr, count);
+	}
+
+	@Override
+	public void execute() {
+		getWordContainer().add(getInputStr());
+		getWordContainer().sort(new Comparator<Word>() {
+			@Override
+			public int compare(Word o1, Word o2) {
+				return Integer.valueOf(o2.getFrequency()).compareTo(o1.getFrequency());
+			}
+		});
+
+		Word[] arr = new Word[Math.min(getCount(), getWordContainer().size())];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = getWordContainer().get(i);
+		}
+		Arrays.sort(arr, new Comparator<Word>() {
+			@Override
+			public int compare(Word o1, Word o2) {
+				return o2.getWord().compareTo(o1.getWord());
+			}
+		});
+		StringBuilder str = new StringBuilder();
+		for (Word word : arr) {
+			str.append(word.getWord() + " ==> " + word.getFrequency() + System.lineSeparator());
+		}
+		getPrinter().show("frequency" + System.lineSeparator() + str.toString());
+	}
+}

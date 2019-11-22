@@ -1,0 +1,109 @@
+package ua.nure.chekhunov.practice3;
+
+//import java.io.IOException;
+//import java.nio.file.Files;
+//import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Part3 {
+    /**
+     * Regex for search word.
+     */
+    private static final String REGEX = "([\\p{L}\\p{Nd}]+\\s*)";
+    /**
+     * {@link Pattern}.
+     */
+    private static final Pattern PATTERN;
+
+    static {
+        PATTERN = Pattern.compile(REGEX);
+    }
+
+    /**
+     * Default constructor.
+     * 
+     * @throws UnsupportedOperationException
+     *             - if create instance Part3.
+     */
+    private Part3() {
+        throw new UnsupportedOperationException("non instance Part3");
+    }
+
+    /**
+     * Changes first char words to upper case.
+     * 
+     * @param input
+     *            - string input data.
+     * @return string where first char words to upper case.
+     */
+    public static String firsCharWordsToUpperCase(final String input) {
+        Matcher matcher = PATTERN.matcher(input);
+        StringBuilder builder = new StringBuilder();
+        StringBuilder temp = new StringBuilder();
+        while (matcher.find()) {
+            temp.append(matcher.group());
+            temp.setCharAt(0, String.valueOf(temp.charAt(0)).toUpperCase().charAt(0));
+            builder.append(temp);
+            temp.setLength(0);
+        }
+        String tempAllText = builder.toString();
+        return tempAllText.substring(0, 1).toLowerCase() + tempAllText.substring(1);
+        //return builder.toString();
+    }
+}
+//    private static final String ENCODING = "Cp1251";
+//
+//    public static String readFile(String path) {
+//        String res = null;
+//        try {
+//            byte[] bytes = Files.readAllBytes(Paths.get(path));
+//            res = new String(bytes, ENCODING);
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        return res;
+//    }
+//
+//    public static String convert(String input) {
+//
+//        StringBuilder sb = new StringBuilder(input);
+//        StringBuilder sb1 = new StringBuilder(input);
+//
+//        Pattern p = Pattern.compile("[a-ˇ¿-ﬂ]+");
+//        Matcher m = p.matcher(sb);
+//
+//        while (m.find()) {
+//
+//            sb.replace(m.start(), m.start() + 1, m.group().substring(0, 1)
+//
+//                    .toUpperCase());
+//        }
+//
+//        String COMMA = " ";
+//        String REGEX = "(^(\\w|\\+|\\-|\\(|\\))+(\\W?,?\\d)*)";
+//        Pattern res = Pattern.compile(REGEX);
+//        Pattern resComma = Pattern.compile(COMMA);
+//
+//        Matcher match;
+//        if (!resComma.matcher(sb).find()) {
+//            System.out.println(sb);
+//        } else if ((match = res.matcher(sb)).find()) {
+//            sb.replace(0, 4, match.group().toLowerCase());
+//        }
+//
+//        //String firstWord = sb.toString();
+//
+//        //String temp = sb.toString();
+//        //String parentString = temp.split(" ", 2)[1];
+//
+//        return sb.toString();
+//
+//    }
+//
+//    public static void main(String[] args) {
+//        System.out.println(convert(readFile("part3.txt")));
+//
+//    }
+//
+//}

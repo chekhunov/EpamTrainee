@@ -1,0 +1,71 @@
+package ua.nure.chekhunov.practice6.part6;
+
+
+public class Word {
+	
+	private String word;
+	
+	private int frequency;
+
+	
+	public Word(final String word) {
+		this.word = word;
+		this.frequency = 1;
+	}
+
+	
+	public final int getFrequency() {
+		return frequency;
+	}
+
+	public final void incFrequency() {
+		frequency++;
+	}
+
+	
+	public final String getWord() {
+		return word;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Word [word=" + word + ", frequency=" + frequency + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result;
+		if (getWord() == null) {
+			result += 0;
+		} else {
+			result += getWord().hashCode();
+		}
+		return result;
+	}
+
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Word)) {
+			return false;
+		}
+		Word other = (Word) obj;
+		if (getWord() == null) {
+			if (other.getWord() != null) {
+				return false;
+			}
+		} else if (!getWord().equals(other.getWord())) {
+			return false;
+		}
+		return true;
+	}
+}

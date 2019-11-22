@@ -1,0 +1,34 @@
+package ua.nure.chekhunov.practice6.part1;
+
+/**
+ * @author chekhunov.
+ *
+ */
+public class Word {
+
+	private String content;
+
+	private int frequency;
+
+	public Word(String word) {
+		this.content = word;
+		frequency = 1;
+	}
+
+	public String getWord() {
+		return content;
+	}
+
+	public void setWord(String word) {
+		this.content = word;
+	}
+
+	public int getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+
+}

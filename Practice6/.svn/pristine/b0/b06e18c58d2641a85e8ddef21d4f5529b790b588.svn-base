@@ -1,0 +1,122 @@
+package ua.nure.chekhunov.practice6.part2;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * @author chekhunov.
+ *
+ */
+public class Part2 {
+	/**
+	 * Count element.
+	 */
+	private static final int N = 10000;
+	/**
+	 * Deleted K element.
+	 */
+	private static final int K = 4;
+	/**
+	 * Constant million for define runtime.
+	 */
+	private static final long MILLION = 1_000_000;
+
+	/**
+	 * Main method.
+	 * 
+	 * @param args argument main.
+	 */
+	public static void main(String[] args) {
+
+		System.out.print("ArrayList#Index:" + " ");
+		System.out.println(removeByIndex(new ArrayList<Integer>(), K) + " ms");
+		System.out.print("LinkedList#Index:" + " ");
+		System.out.println(removeByIndex(new LinkedList<Integer>(), K) + " ms");
+
+		System.out.print("ArrayList#Iterator:" + " ");
+		System.out.println(removeByIterator(new ArrayList<Integer>(), K) + " ms");
+		System.out.print("LinkedList#Iterator:" + " ");
+		System.out.println(removeByIterator(new LinkedList<Integer>(), K) + " ms");
+
+	}
+
+	/**
+	 * Add input list.
+	 * 
+	 * @param list - list to be filled.
+	 * @param n    - count element.
+	 */
+	public static void addList(final List<Integer> list) {
+		for (int i = 0; i < N; i++) {
+			list.add(i);
+		}
+	}
+
+	/**
+	 * Delete item for input list.
+	 * 
+	 * @param list - input list.
+	 * @param k    - delete k element.
+	 */
+	public static long removeByIndex(List<Integer> list, int k) {
+		addList(list);
+		long timeArray = System.nanoTime();
+		if (0 > k || k > list.size()) {
+			throw new IllegalArgumentException(k + " does not match: 0 < k < n");
+		}
+		int count = 0;
+		for (int i = 0; list.size() > 1; count++, i++, i = i % list.size()) {
+			if (count == k - 1) {
+				list.remove(i);
+				count = 0;
+			}
+		}
+		timeArray = (System.nanoTime() - timeArray) / MILLION;
+		return timeArray;
+	}
+
+	/**
+	 * Delete item for input list.
+	 * 
+	 * @param list - input list.
+	 * @param k    - delete k element.
+	 */
+	public static long removeByIterator(List<Integer> list, int k) {
+		addList(list);
+		long timeArray = System.nanoTime();
+		if (0 > k || k > list.size()) {
+			throw new IllegalArgumentException(k + " does not match: 0 < k < n");
+		}
+
+		int count = 0;
+		for (int i = 0; list.size() > 1; count++, i++, i = i % list.size()) {
+			if (count == k - 1) {
+				deleteIndexInList(list, i);
+				count = 0;
+			}
+		}
+
+		timeArray = (System.nanoTime() - timeArray) / MILLION;
+		return timeArray;
+	}
+
+	/**
+	 * Delete item with Iterator.
+	 * 
+	 * @param list - input list.
+	 * @param k    - delete k element.
+	 * @return
+	 */
+	private static int deleteIndexInList(List<Integer> list, int k) {
+		int index = 0;
+		for (Iterator<Integer> i = list.iterator(); i.hasNext(); index++) {
+			Integer name = i.next();
+			if (index == k) {
+				i.remove();
+			}
+		}
+		return index;
+	}
+}

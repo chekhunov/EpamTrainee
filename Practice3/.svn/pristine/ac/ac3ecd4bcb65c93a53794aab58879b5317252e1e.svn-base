@@ -1,0 +1,74 @@
+package ua.nure.chekhunov.practice3;
+
+import java.security.MessageDigest;
+import java.util.Locale;
+
+/**
+ * @author chekhunov
+ *
+ */
+public final class Part4 {
+
+    /**
+     * Default constructor.
+     * 
+     * @throws Exception
+     *
+     */
+private Part4(){
+}
+
+    /**
+     * Convert string input data to string hash-hex.
+     * 
+     * @param input     - input data.
+     * @param algorithm - name algorithm.
+     * @param encoding  - encoding.
+     * @return hash code in hex
+     * @throws Exception - not found algoritm.
+     * 
+     */
+    public static String hash(final String input, final String algorithm) throws Exception {
+
+        MessageDigest digest;
+        final char count = 0xFF;
+
+        switch (algorithm) {
+        case "MD5":
+            digest = MessageDigest.getInstance(algorithm);
+            break;
+        case "SHA-256":
+            digest = MessageDigest.getInstance(algorithm);
+            break;
+        case "SHA-512":
+            digest = MessageDigest.getInstance(algorithm);
+            break;
+        default:
+            throw new Error("Not found input algorithm");
+        }
+        digest.reset();
+        final String encoding = "Cp1251";
+        digest.update(input.getBytes(encoding));
+        byte[] hash = digest.digest();
+        StringBuilder hexString = new StringBuilder();
+        StringBuilder hex = new StringBuilder();
+        for (byte var : hash) {
+            hex.append(Integer.toHexString(count & var));
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+            hex.setLength(0);
+        }
+        hexString.toString();
+        String result = hexString.toString();
+        return result.toUpperCase(Locale.ENGLISH);
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        System.out.println(hash("asdf", "MD5"));
+        System.out.println(hash("asdf", "SHA-256"));
+    }
+
+}

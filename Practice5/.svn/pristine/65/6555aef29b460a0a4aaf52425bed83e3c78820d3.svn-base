@@ -1,0 +1,95 @@
+package ua.nure.chekhunov.practice5;
+
+public class Part3 {
+
+	private int counter;
+	private int counter2;
+
+	private int loopPeps;
+	private int sleep;
+
+	private Thread[] threads;
+
+	public Part3(int n, int k, int t) {
+		this.threads = new Thread[n];
+		this.loopPeps = k;
+		this.sleep = t;
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
+	public int getCounter2() {
+		return counter2;
+	}
+
+	public void setCounter2(int counter2) {
+		this.counter2 = counter2;
+	}
+
+	public void reset() {
+		counter = 0;
+		counter2 = 0;
+	}
+
+	public void output() {
+		System.out.printf("%s %s%n", counter, counter2);
+		try {
+			setCounter(getCounter() + 1);
+			Thread.sleep(sleep);
+			setCounter2(getCounter2() + 1);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+	}
+
+	public void test() throws InterruptedException {
+
+		for (int i = 0; i < threads.length; i++) {
+			threads[i] = new ThreadImp();
+			threads[i].start();
+		}
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].join();
+		}
+	}
+
+	public void testSync() {
+		for (int i = 0; i < threads.length; i++) {
+			threads[i] = new ThreadImpSynch();
+			threads[i].start();
+		}
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		Part3 p = new Part3(3, 5, 100);
+		p.test();
+		p.reset();
+		p.testSync();
+	}
+
+	public class ThreadImp extends Thread {
+
+		public void run() {
+			for (int i = 0; i < Part3.this.loopPeps; i++) {
+				output();
+			}
+		}
+	}
+
+	public class ThreadImpSynch extends Thread {
+
+		public void run() {
+			synchronized (Part3.this) {
+				for (int i = 0; i < Part3.this.loopPeps; i++) {
+					output();
+				}
+			}
+		}
+	}
+}

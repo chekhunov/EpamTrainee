@@ -1,0 +1,6 @@
+package ua.nure.chekhunov.practice6.part6;
+
+public interface Printer {
+	
+	void show(String str);
+}

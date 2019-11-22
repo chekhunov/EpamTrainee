@@ -1,0 +1,11 @@
+.footer {
+    margin: 100px 5px 20px;
+    padding: 14px 16px;
+    overflow: hidden;
+    background: #333;
+    text-align: center;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)), url(../img/bg1.png);
+    color: #fff;
+    font-family: Arial, serif;
+    font-size: 18px;
+}

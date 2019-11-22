@@ -1,0 +1,501 @@
+package ua.nure.chekhunov.practice2;
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class ListImpl implements List {
+
+	private Node first;
+	private Node last;
+	private int size;
+
+	/**
+	 * {@link Object}.
+	 */
+	private Object[] arr = {};
+
+	/**
+	 * Current capacity for creation array.
+	 */
+	private final int capacity;
+
+	/**
+	 * Mod count.
+	 */
+	private int modCount;
+
+	/**
+	 * Current position to index array.
+	 */
+	private int pointer;
+
+	{
+		modCount = 0;
+		pointer = 0;
+		capacity = 0;
+	}
+
+	public ListImpl() {
+		this.first = this.last = null;
+		this.size = 0;
+	}
+
+	@Override
+	public void clear() {
+
+		arr = new Object[] {};
+		this.size = 0;
+	}
+
+	@Override
+	public int size() {
+
+		return size;
+	}
+
+	@Override
+	public Iterator<Object> iterator() {
+
+		return new IteratorImpl();
+	}
+
+//	//Увеличение размера массива  по необходимости
+//    private void newLength() {
+//        if (size == arr.length) {
+//            arr = new Object[(int) (1.5 * arr.length)];
+//        }
+//    }
+//    private void newLength(Object[] all) {
+//        if (arr.length <= size+all.length){
+//            arr = new Object[(int) 1.5
+//                    *(size+all.length)];
+//        }
+//    }
+
+	@Override
+	public void addFirst(Object element) {
+
+		Object[] tempArr = new Object[arr.length + 1];
+		System.arraycopy(arr, 0, tempArr, 1, size);
+		tempArr[0] = element;
+		arr = tempArr;
+		size++;
+	}
+
+	@Override
+	public void addLast(Object element) {
+
+		Object[] arr2 = new Object[arr.length + 1];
+		System.arraycopy(arr, 0, arr2, 0, arr.length);
+		arr2[arr2.length - 1] = element;
+		arr = arr2;
+		size++;
+	}
+
+	@Override
+	public void removeFirst() {
+
+		if (this.first == null) {
+			this.first = this.last = null;
+		}
+		remove(0);
+
+	}
+
+	@Override
+	public void removeLast() {
+
+		int count = arr.length - 1;
+		remove(count);
+
+	}
+
+	public void remove(int index) {
+
+		Object[] arr2 = new Object[arr.length - 1];
+		System.arraycopy(arr, 0, arr2, 0, index);
+		System.arraycopy(arr, index + 1, arr2, index, arr2.length - index);
+		arr = arr2;
+	}
+
+	@Override
+	public Object getFirst() {
+
+		return arr[0];
+
+	}
+
+	public void isEmpty() {
+		if (this.first != null) {
+			System.out.println("Список не пуст");
+		} else
+			System.out.println("Список пуст");
+	}
+
+	@Override
+	public Object getLast() {
+
+		return arr[arr.length - 1];
+
+	}
+
+	@Override
+	public Object search(Object element) {
+		Object str = "";
+		 for (int index = 0; index < arr.length; index++) {
+		        if (arr[index] == element)
+		            str = arr[index];
+		    }
+		    return str;
+	}
+
+	@Override
+	public boolean remove(Object element) {
+		
+		Object[] arr2 = new Object[arr.length - 1];
+		System.arraycopy(arr, 0, arr2, 0, 0);
+		System.arraycopy(arr, 0 + 1, arr2, 0, arr2.length - 0);
+		arr = arr2;
+	return true;
+}
+//		if (element == null) {
+//			for (int i = 0; i < pointer; i++) {
+//				if (arr[i] == null) {
+//					
+//					restructMyList(i);
+//					return true;
+//				}
+//			}
+//		} else {
+//			for (int i = 0; i < pointer; i++) {
+//				if (this.arr[i].equals(element)) {
+//					
+//					restructMyList(i);
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
+//	}
+
+	/**
+	 * Restructuring collections. Move item collections.
+	 * 
+	 * @param index - restructuring period.
+	 */
+	private void restructMyList(final int index) {
+		modCount++;
+		if (index == size() - 1) {
+			arr[index] = null;
+		} else {
+			int lengthCopy = size() - index - 1;
+			System.arraycopy(arr, index + 1, arr, index, lengthCopy);
+		}
+		pointer--;
+		if (pointer == (arr.length / 4)) {
+			resize(pointer + (arr.length / 4));
+		}
+	}
+
+	/**
+	 * Change length collections.
+	 * 
+	 * @param len - length new object.
+	 */
+	private void resize(final int len) {
+		Object[] temp = new Object[len];
+		System.arraycopy(arr, 0, temp, 0, pointer);
+		arr = temp;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+
+	public String toString() {
+		Iterator<Object> i = iterator();
+		if (!i.hasNext())
+			return "[]";
+
+		StringBuilder sb = new StringBuilder();
+		sb.append('[');
+		for (;;) {
+			Object e = i.next();
+			sb.append(e == this ? "(this Collection)" : e);
+			if (!i.hasNext())
+				return sb.append(']').toString();
+			sb.append(", ");
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+
+	public Object[] toArray() {
+
+		Object[] array = this.arr;
+
+		return array;
+	}
+
+	private static class Node {
+
+		private Object element;
+		private Node next;
+		private Node prev;
+
+		public Node(Object element) {
+			this.element = element;
+			this.next = null;
+		}
+
+		public Node(Object element, Node next) {
+			this.element = element;
+			this.next = next;
+			this.prev = prev;
+		}
+
+		public void setData(Object element) {
+			this.element = element;
+		}
+
+		public Object getData() {
+			return this.element;
+		}
+
+		public void setNext(Node next) {
+			this.next = next;
+		}
+
+		public Node getNext() {
+			return this.next;
+		}
+
+		public Node getPrev() {
+			return prev;
+		}
+
+		public void setPrev(Node prev) {
+			this.prev = prev;
+		}
+	}
+
+	private class IteratorImpl implements Iterator<Object> {
+		private boolean flag = true;
+
+		public boolean isFlag() {
+			return flag;
+		}
+
+		public void setFlag(boolean flag) {
+			this.flag = flag;
+		}
+
+		public int getPointer() {
+			return pointer;
+		}
+
+		public void setPointer(int pointer) {
+			this.pointer = pointer;
+		}
+
+		public boolean isNextOrPrevious() {
+			return nextOrPrevious;
+		}
+
+		public void setNextOrPrevious(boolean nextOrPrevious) {
+			this.nextOrPrevious = nextOrPrevious;
+		}
+
+		private int currentIndex = 0;
+		private int pointer = -1;
+		private boolean nextOrPrevious = false;
+
+		public boolean hasNext() {
+			if (pointer < toArray().length - 1) {
+				return true;
+			}
+			return false;
+		}
+
+		public Object next() {
+			flag = false;
+			nextOrPrevious = false;
+			return toArray()[++pointer];
+		}
+
+		private int expectedModCount;
+		{
+			expectedModCount = ListImpl.this.modCount;
+		}
+
+		public void remove() {
+
+			if (isFlag()) {
+				throw new IllegalStateException();
+			}
+			int i = 0;
+			if (!isNextOrPrevious()) {
+				i = pointer--;
+			} else {
+				i = ++pointer;
+			}
+
+			Object[] arr2 = new Object[arr.length - 1];
+			System.arraycopy(arr, 0, arr2, 0, i);
+			System.arraycopy(arr, i + 1, arr2, i, arr2.length - i);
+			arr = arr2;
+
+			flag = true;
+			if (isNextOrPrevious()) {
+				--pointer;
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ua.nure.chekhunov
+	 */
+	public static void main(String[] args) {
+		List list = new ListImpl();
+		ListImpl listImpl = new ListImpl();
+
+//		// add
+//		list.addLast("A");
+//		list.addLast("B");
+//		list.addLast("C");
+//
+//		System.out.println(list);
+//		System.out.println(list.size());
+//
+//		list.clear();
+//		System.out.println(list);
+//		System.out.println(list.size());
+//
+//		list.addLast("A");
+//		list.addLast("B");
+//		list.addLast("C");
+//
+//		System.out.println(list);
+//		System.out.println(list.size());
+//
+//		list.addFirst("A");
+//		list.addLast("B");
+//		list.addFirst("C");
+//
+//		System.out.println(list);
+//		System.out.print(list.getFirst());
+//		System.out.print(list.getLast());
+//		
+//		
+//		list.addLast("A");
+//		list.addLast("B");
+//		list.addLast("C");
+//
+//		
+//		
+//		Iterator<Object> it = list.iterator();
+//		System.out.println(it.next());
+//		it.remove();
+//		System.out.println(it.next());
+//		it.remove();
+//		System.out.println(it.next());
+//		it.remove();
+//		System.out.println(list);
+
+//		list.addFirst(3);
+//		list.addFirst(2);
+//		list.addFirst(1);
+//		
+//		System.out.println(list);
+//		System.out.println(list.search(1));
+//		System.out.println(list.search(2));
+//		System.out.println(list.getLast());
+//		System.out.println(list);
+		Iterator<Object> it1 = list.iterator();
+//
+		list.addLast(1);
+		list.addLast(2);
+		list.addLast(1);
+
+		list.remove(1);
+		System.out.println(list);
+
+		list.remove(2);
+		System.out.println(list);
+
+		
+		System.out.println(it1.next());
+
+//		-- expected --
+//		[2, 1]
+//		[1]
+//		1
+		
+		
+//		list.removeFirst();
+//		System.out.println(list);
+//		list.removeLast();
+//		System.out.println(list);
+
+		// it = getIterator(list);
+
+//		System.out.println(it.next());
+//		it.remove();
+//		System.out.println(list);
+//
+//		//it = getIterator(list)
+//
+//		System.out.println(it.next());
+//		it.remove();
+//		System.out.println(list);
+
+//		list.addLast("A");
+//		System.out.println(list + " addLast");
+//		list.addFirst("B");
+//		list.addFirst("C");
+//		System.out.println(list + " addFirst");
+//
+//		list.clear();
+//		System.out.println(list + " clear");
+//		list.addFirst("A");
+//		list.addFirst("B");
+//		list.addFirst("C");
+//		System.out.println(list + "addFirst");
+//		System.out.println(list.size());
+//		list.removeFirst();
+//		System.out.println(list + " removeFirst");
+//		list.addLast("P");
+//		list.removeLast();
+//		System.out.println(list + " removeLast");
+//		System.out.println(list.getFirst() + " getFirst");
+//		System.out.println(list.getLast() + " getLast");
+//		System.out.println(list.search("K") + " search");
+//		System.out.println(list);
+//		list.remove("B");
+//		System.out.println(list.toString());
+//
+//		System.out.println("Show while iterator: ");
+//		Iterator<Object> it = list.iterator();
+//// while iterator
+//		while (it.hasNext()) {
+//			System.out.print(it.next() + " ");
+//		}
+//
+//		System.out.println("\nShow remove iterator \n: " + list);
+//		Iterator<Object> it1 = list.iterator();
+//		while (it1.hasNext()) {
+//			it1.next();
+//		}
+
+	}
+
+}

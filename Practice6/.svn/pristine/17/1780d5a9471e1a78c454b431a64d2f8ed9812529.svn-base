@@ -1,0 +1,71 @@
+package ua.nure.chekhunov.practice6.part6;
+
+
+public class FileCommandBean {
+	
+	private String fileName;
+	
+	private Task task;
+
+	
+	public final String getFileName() {
+		return fileName;
+	}
+
+	
+	public final void setFileName(final String fileName) {
+		this.fileName = fileName;
+	}
+
+	
+	public final Task getTask() {
+		return task;
+	}
+
+	
+	public final void setTask(final Task task) {
+		this.task = task;
+	}
+
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
+		result = prime * result + ((task == null) ? 0 : task.hashCode());
+		return result;
+	}
+
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof FileCommandBean)) {
+			return false;
+		}
+		FileCommandBean other = (FileCommandBean) obj;
+		if (fileName == null) {
+			if (other.fileName != null) {
+				return false;
+			}
+		} else if (!fileName.equals(other.fileName)) {
+			return false;
+		}
+		if (task != other.task) {
+			return false;
+		}
+		return true;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "FileCommandBean [fileName=" + fileName + ", task=" + task + "]";
+	}
+}

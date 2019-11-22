@@ -1,0 +1,42 @@
+package ua.nure.chekhunov.practice6.part6;
+
+public abstract class Command {
+	
+	private final Printer printer;
+	
+	private final WordContainer wordContainer;
+	
+	private final String inputStr;
+	
+	private final int count;
+
+	
+	public Command(final Printer printer, final String inputStr, final int count) {
+		this.printer = printer;
+		this.inputStr = inputStr;
+		this.count = count;
+		this.wordContainer = new WordContainer();
+	}
+
+	
+	public final String getInputStr() {
+		return inputStr;
+	}
+
+	
+	public final int getCount() {
+		return count;
+	}
+
+	
+	public final Printer getPrinter() {
+		return printer;
+	}
+
+	
+	public final WordContainer getWordContainer() {
+		return wordContainer;
+	}
+
+	public abstract void execute();
+}

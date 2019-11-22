@@ -1,0 +1,40 @@
+package ua.nure.chekhunov.practice6.part3;
+
+public class Part3 {
+
+	public static void main(String[] args) {
+		Parking parking = new Parking(3);
+
+//		System.out.print("parking.arrive(2)" + " ");
+//		System.out.println(parking.arrive(2));
+//
+//		System.out.print("parking.arrive(3)" + " ");
+//		System.out.println(parking.arrive(3));
+//
+//		System.out.print("parking.arrive(2)" + " ");
+//		System.out.println(parking.arrive(2));
+//
+//		System.out.print("parking.arrive(2)" + " ");
+//		System.out.println(parking.arrive(2));
+//
+//		System.out.print("parking.arrive(2)" + " ");
+//		System.out.println(parking.arrive(2));
+//
+//		System.out.print("parking.arrive(1)" + " ");
+//		System.out.println(parking.depart(1));
+//
+//		System.out.print("parking.arrive(1)" + " ");
+//		System.out.println(parking.depart(1));
+		
+		parking.print();
+		parking.arrive(1);
+		parking.arrive(2);
+		parking.print();
+		parking.arrive(1);
+		parking.print();
+		parking.arrive(1);
+		parking.print();
+
+	}
+
+}

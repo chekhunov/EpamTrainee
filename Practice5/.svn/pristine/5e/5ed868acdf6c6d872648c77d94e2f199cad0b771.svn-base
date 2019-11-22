@@ -1,0 +1,86 @@
+package ua.nure.chekhunov.practice5;
+
+
+import java.io.IOException;
+import java.util.Arrays;
+
+
+public class Spam extends Thread {
+	
+	private final String[] messages;
+	
+	private final int[] times;
+	
+	private final int lengthCommand;
+
+	
+	public Spam(final String[] messages, final int[] times) {
+		this.messages = Arrays.copyOf(messages, messages.length);
+		this.times = Arrays.copyOf(times, times.length);
+		lengthCommand = Math.min(messages.length, times.length);
+	}
+
+	
+	@Override
+	public void run() {
+		int i = 0;
+		while (!isInterrupted()) {
+			try {
+				System.err.println(messages[i % (lengthCommand - 1)]);
+				Thread.sleep(times[i % (lengthCommand - 1)]);
+				i++;
+			} catch (InterruptedException e) {
+				interrupt();
+			}
+		}
+	}
+
+	
+	public static void main(String[] args) {
+		
+		final int[] times = new int[] { 333, 222, 555, 333, 400, 200, 500, 300, 50, 250 };
+		final String[] messages = new String[] { "@@@", "bbbbbbb", "?", "What are you", "doing",
+				"?", "how is the weather", "rain was", "goodbye", "!", "goodbye" };
+		
+		
+		class RunnableImp implements Runnable {
+			private Spam spans;
+
+			
+			@Override
+			public void run() {
+				spans = new Spam(messages,times);
+				spans.start();
+				byte[] buffer = new byte[10];
+				int count;
+				try {
+					do {
+						while ((count = System.in.read(buffer)) == -1) {
+							System.out.print(" ");
+						}
+					} while (!System.lineSeparator().equals(new String(buffer, 0, count, "Cp1251")));
+					spans.interrupt();
+					System.err.println("stopped");
+				} catch (IOException ex) {
+				
+					System.err.println(ex.getMessage());
+				}
+			}
+		}
+		new Thread(new RunnableImp()).start();
+	}
+
+	
+	public final String[] getMessages() {
+		return Arrays.copyOf(messages, messages.length);
+	}
+
+	
+	public final int[] getTimes() {
+		return Arrays.copyOf(times, times.length);
+	}
+	
+	public final int getLenthCommand() {
+		return lengthCommand;
+	}
+}

@@ -1,0 +1,141 @@
+body {
+    background-image: url(../img/bg13.jpg);
+    z-index: 99;
+}
+
+input[type=radio]:checked + label {
+    opacity: 1;
+}
+
+input:invalid:not(:placeholder-shown) {
+    border-color: red;
+}
+
+input:valid:not(:placeholder-shown) {
+    border-color: green;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+.infoLabel {
+    padding: 100px;
+    margin: 0 0 -265px 0;
+}
+
+.info {
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 800;
+    opacity: 0.5;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.info:hover {
+    transition: all .3s cubic-bezier(.6, 0, .4, 1);
+    opacity: 1;
+}
+
+label[for="signin"] {
+    margin-right: 20px;
+}
+
+.startPageContainer {
+    text-align: center;
+}
+
+.startPageContainer #signInForm, .startPageContainer #signUpForm {
+    width: 430px;
+    height: 290px;
+    background-color: rgba(169, 169, 169, 0.8);
+    margin: 120px auto 0 auto;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.startPageContainer #signInForm {
+    height: 240px;
+}
+
+.startPageContainer #signUpForm {
+    height: 380px;
+}
+
+.signUpForm {
+    width: 350px;
+    height: 34px;
+    border-radius: 6px;
+    padding-left: 18px;
+    margin: 2% 0 0 0;
+    font-size: 17px;
+}
+
+.signInForm {
+    width: 350px;
+    height: 40px;
+    font-size: 17px;
+    border-radius: 6px;
+    padding-left: 18px;
+}
+
+#username {
+    margin: 10% 0 5% 0;
+}
+
+#lastName {
+    margin: 10% 0 0 0;
+}
+
+#password {
+    margin-bottom: 5%;
+}
+
+.inputText input:hover {
+    box-shadow: 0 0 8px 4px rgba(105, 105, 105, 0.35);
+}
+
+#signUpButton, #signInButton {
+    padding: 15px 50px;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(105, 105, 105, 0.7);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#signInButton {
+    margin: 0 0 20px 0;
+}
+
+#signUpButton {
+    margin: 10px 0 20px 0;
+}
+
+#signUpButton:hover, #signInButton:hover {
+    background-color: rgba(105, 105, 105, 1);
+}
+
+.wrongParametres, .wrongSignUpParametres {
+    color: red;
+}
+
+.wrongParametres {
+    font-size: 18px;
+    margin: -3% 0 3% 0;
+}
+
+.wrongSignUpParametres {
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+
+
+
+
+

@@ -1,0 +1,68 @@
+package ua.nure.chekhunov.practice6.part6;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class WordContainer {
+	
+	private static final String REGEX = "([\\p{L}\\p{Nd}]+)";
+	
+	private List<Word> listWord = new ArrayList<>();
+
+	
+	public void add(final String item) {
+		List<String> listItem = parse(item);
+		insertItem(listItem);
+	}
+
+	
+	public void sort(final Comparator<Word> sort) {
+		Collections.sort(listWord, sort);
+	}
+
+	
+	public Word get(final int index) {
+		return listWord.get(index);
+	}
+
+	public int size() {
+		return listWord.size();
+	}
+
+	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		for (Word word : listWord) {
+			str.append(word.getWord() + ":" + word.getFrequency() + System.lineSeparator());
+		}
+		return str.toString().trim();
+	}
+
+	protected void insertItem(final List<String> list) {
+		int index;
+		for (String var : list) {
+			Word word = new Word(var);
+			index = listWord.indexOf(word);
+			if (index == -1) {
+				listWord.add(word);
+			} else {
+				listWord.get(index).incFrequency();
+			}
+		}
+	}
+
+	private List<String> parse(final String input) {
+		Pattern pattern = Pattern.compile(REGEX);
+		Matcher matcher = pattern.matcher(input);
+		List<String> listItem = new ArrayList<>();
+		while (matcher.find()) {
+			listItem.add(matcher.group().trim());
+		}
+		return listItem;
+	}
+}

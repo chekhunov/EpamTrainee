@@ -1,0 +1,13 @@
+package ua.nure.chekhunov.summarytask4;
+
+import ua.nure.chekhunov.summarytask4.db.DBManager;
+import ua.nure.chekhunov.summarytask4.db.DBManagerInterface;
+
+import java.sql.SQLException;
+
+public class Demo {
+    public static void main(String[] args) throws SQLException {
+        DBManager dbManager = new DBManager();
+        System.out.println(dbManager.changeBalans(2,1500));
+    }
+}

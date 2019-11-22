@@ -1,0 +1,24 @@
+package ua.nure.chekhunov.practice1;
+
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
+public class Part6 {
+
+	public static void primeNumberArray(int count) {
+		int array[] = IntStream.iterate(2, i -> i + 1).filter(j -> IntStream.range(2, j).noneMatch(e -> j % e == 0))
+				.limit(count).toArray();
+
+		String res = Arrays.toString(array);
+		String s = res.replaceAll(",", "");
+		s = s.replaceAll("[\\[\\](){}]","");
+		System.out.println(s);
+	}
+
+	public static void main(String[] args) {
+		if (args.length != 0) {
+			int x = Integer.parseInt(args[0]);
+			Part6.primeNumberArray(x);
+		}
+	}
+}

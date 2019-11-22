@@ -1,0 +1,64 @@
+package ua.nure.chekhunov.practice5;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+//Создать класс Spam, который получает в конструкторе массив сообщений и согласованный
+//с ним массив интервалов времени в миллисекундах и выводит одновременно соответствующие
+//сообщения на экран через заданные интервалы времени.+ По нажатию на Enter приложение должно
+//завершать свою работу (данную функциональность поместить в метод Spam.main).
+//Входные данные (массив сообщений и массив пауз) записывать в коде класса Spam. Количество
+//элементов в каждом из массивов - минимум 2.
+
+/**
+ * @author chekhunov
+ *
+ */
+public class Spam extends Thread {
+
+	private Spam() {
+	}
+
+	private String[] messages = new String[] { "@@@", "bbbbbbb" };
+	private int[] time = new int[] { 333, 222 };
+
+	@Override
+	public void run() {
+		for (int i = 0; i < time.length; i++) {
+			try {
+				Thread.sleep(time[i]);
+			} catch (InterruptedException e) {
+				return;
+			}
+			System.out.println(messages[i]);
+		}
+	}
+
+	public static void main(String[] args) {
+		final Spam s = new Spam();
+		s.start();
+		
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					Scanner in = new Scanner(System.in);
+					try {
+						sleep(100);
+						in.nextLine();
+						in.close();
+						break;
+					} catch (NoSuchElementException e) {
+						continue;
+					} catch (InterruptedException e) {
+						continue;
+					} 
+				}
+				System.out.println("stopped");
+				s.interrupt();
+			}
+		}).start();
+		
+	}
+
+}

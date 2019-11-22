@@ -1,0 +1,132 @@
+package ua.nure.chekhunov.practice3;
+
+//import java.util.Iterator;
+//import java.util.LinkedHashSet;
+//import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Implementation "Part2".
+ * 
+ * @author chekhunov
+ */
+public class Part2 {
+
+    /**
+     * Regex for pars text on word.
+     */
+//    private static final String REGEX = "([\\p{L}&&[^\\p{Nd}]]+)";
+    /**
+     * 
+     */
+//    private static final Pattern PATTERTN;
+
+    // static {
+    // PATTERTN = Pattern.compile(REGEX);
+    // }
+
+    /**
+     * Default constructor.
+     */
+    private Part2() {
+        throw new UnsupportedOperationException("Subtask02");
+    }
+
+    /**
+     * Search Min Max words.
+     * 
+     * @param input - string input data.
+     * 
+     * @return Min Max words.
+     */
+    public static String convert(final String input) {
+        String min = getMin(input);
+        String max = getMax(input);
+        return min.toString() + System.lineSeparator() + max.toString();
+//        Set<String> word = new LinkedHashSet<>();
+//        StringBuilder strMax = new StringBuilder();
+//        StringBuilder strMin = new StringBuilder();
+//        StringBuilder max = new StringBuilder("Max: ");
+//        StringBuilder min = new StringBuilder("Min: ");
+//
+//        Matcher matcher = PATTERTN.matcher(input);
+//        while (matcher.find()) {
+//            word.add(matcher.group());
+//        }
+//        Iterator<String> it = word.iterator();
+//        StringBuilder temp = new StringBuilder();
+//
+//        if (it.hasNext()) {
+//            strMax.append(it.next());
+//            strMin.append(strMax);
+//            while (it.hasNext()) {
+//                temp.append(it.next());
+//                if (temp.length() < strMin.length()) {
+//                    strMin.setLength(0);
+//                    strMin.append(temp);
+//                } else if (temp.length() > strMax.length()) {
+//                    strMax.setLength(0);
+//                    strMax.append(temp);
+//                }
+//                temp.setLength(0);
+//            }
+//        }
+//        for (String var : word) {
+//            if (var.length() == strMin.length()) {
+//                min.append(var + ", ");
+//            } else if (var.length() == strMax.length()) {
+//                max.append(var + ", ");
+//            }
+//        }
+//        min.setLength(min.length() - 2);
+//        max.setLength(max.length() - 2);
+//        return min.toString() + System.lineSeparator() + max.toString();
+    }
+
+    public static String getMin(String input) {
+        StringBuilder sb = new StringBuilder();
+        int count = Integer.MAX_VALUE;
+        sb.append("MIN: ");
+        Pattern p = Pattern.compile("[a-zA-Z]+");
+        Matcher m = p.matcher(input);
+        while (m.find()) {
+            Pattern p2 = Pattern.compile(m.group());
+            Matcher m2 = p2.matcher(sb.toString().substring(5));
+            if (count > m.group().length()) {
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("MIN: ");
+                count = m.group().length();
+                sb2.append(m.group());
+                sb = sb2;
+            } else if (count == m.group().length() && !(m2.find())) {
+                sb.append(", " + m.group());
+
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String getMax(String input) {
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        sb.append("MAX: ");
+        Pattern p = Pattern.compile("[a-zA-Z]+");
+        Matcher m = p.matcher(input);
+        while (m.find()) {
+            Pattern p2 = Pattern.compile(m.group());
+            Matcher m2 = p2.matcher(sb.toString().substring(5));
+            if (count < m.group().length()) {
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("MAX: ");
+                count = m.group().length();
+                sb2.append(m.group());
+                sb = sb2;
+            } else if (count == m.group().length() && !(m2.find())) {
+                sb.append(", " + m.group());
+
+            }
+        }
+        return sb.toString();
+    }
+}

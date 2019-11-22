@@ -1,0 +1,25 @@
+<html>
+<body>
+<h1>Kyivstar tariffs</h1>
+<table border="1">
+<tr>
+<th>TariffName</th><th>Payroll</th><th>Insidenetwork</th><th>Outsidenetwork</th><th>ToFixedPhones</th><th>SMSPrice</th><th>FavouriteNumbers</th><th>Tariffing</th><th>ConnectPayment</th>
+</tr>
+<tr>
+<td>vil'nyy_kyivstar_30</td><td>30</td><td>0.3</td><td>3</td><td>4</td><td>0.7</td><td>6</td><td>for_each_twelve_seconds</td><td>60</td>
+</tr>
+<tr>
+<td>vil'nyy_kyivstar_50</td><td>50</td><td>0.1</td><td>1</td><td>2</td><td>0.5</td><td>10</td><td>for_each_twelve_seconds</td><td>100</td>
+</tr>
+<tr>
+<td>vil'nyy_kyivstar_10</td><td>10</td><td>0.5</td><td>5</td><td>6</td><td>0.9</td><td>2</td><td>for_each_minute</td><td>20</td>
+</tr>
+<tr>
+<td>vil'nyy_kyivstar_40</td><td>40</td><td>0.2</td><td>2</td><td>3</td><td>0.6</td><td>8</td><td>for_each_twelve_seconds</td><td>80</td>
+</tr>
+<tr>
+<td>vil'nyy_kyivstar_20</td><td>20</td><td>0.4</td><td>4</td><td>5</td><td>0.8</td><td>4</td><td>for_each_minute</td><td>40</td>
+</tr>
+</table>
+</body>
+</html>

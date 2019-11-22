@@ -1,0 +1,46 @@
+package ua.nure.chekhunov.practice6.part6;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+public final class ParseInputCommand {
+	
+	public static final String REGEX;
+	
+	private static final Pattern PATTERN;
+
+	static {
+		StringBuilder temp = new StringBuilder();
+		for (Task task : Task.values()) {
+			temp.append(task.getName() + "|");
+		}
+		temp.setLength(temp.length() - 1);
+		REGEX = "^\\s*((-i)|(--input))\\s+(\\w+\\.[\\w]+)\\s+((-t)|(--task))\\s+(" + temp.toString()
+				+ ")\\s*";
+		PATTERN = Pattern.compile(REGEX);
+	}
+
+	private ParseInputCommand() {
+		throw new UnsupportedOperationException("non instance ParseInputCommand");
+	}
+
+	public static FileCommandBean parse(final String inputCommand) {
+		if (!checkCommand(inputCommand)) {
+			throw new IllegalArgumentException("invalid input commnad");
+		}
+		Matcher matcher = PATTERN.matcher(inputCommand);
+		matcher.find();
+		FileCommandBean bean = new FileCommandBean();
+
+		bean.setFileName(matcher.group(4));
+		bean.setTask(Task.valueOf(matcher.group(8).toUpperCase()));
+
+		return bean;
+	}
+
+	public static boolean checkCommand(final String inputCommand) {
+		Matcher matcher = PATTERN.matcher(inputCommand);
+		return matcher.matches();
+	}
+}

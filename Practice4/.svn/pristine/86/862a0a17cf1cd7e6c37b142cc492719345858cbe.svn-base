@@ -1,0 +1,142 @@
+package ua.nure.chekhunov.practice4;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+/**
+ * Implementation "Part1".<br>
+ * Displays the contents of a text file to the console , replacing each word of
+ * length three characters are all lower case characters (lower case) in capital
+ * (upper case).
+ *
+ * @author chekhunov.
+ */
+public final class Part1 {
+
+    /**
+     * Path to the file.
+     */
+    private static final String FILE_NAME = "part1.txt";
+    /**
+     * Encoding file.
+     */
+    private static final String ENCODING = "Cp1251";
+    /**
+     * Regular expression for word.
+     */
+    private static final String REGEX = "\\s*([\\p{L}\\p{Nd}]*)\\s*(\\p{P}*)(\\n*)";
+
+    /**
+     * Regular expression.
+     */
+    private static final Pattern PATTERN;
+    /**
+     * Max length word.
+     */
+    private static final int WORD_MAX_LENGTH = 3;
+    /**
+     * Flag for test.
+     */
+    private static boolean flag = false;
+
+    static {
+        PATTERN = Pattern.compile(REGEX);
+    }
+
+    /**
+     * Main functions.
+     *
+     * @param args argument main functions.
+     * @throws IOException {@link IOException}.
+     */
+    public static void main(final String[] args) throws IOException {
+
+        System.out.println(Part1.run(FILE_NAME, ENCODING));
+    }
+
+    /**
+     * Constructor with parameter.
+     *
+     * @param path     - path to the file.
+     * @param encoding - file encoding.
+     * @return content file.
+     * @throws FileNotFoundException - not fount file.
+     */
+    public static String readFile(final String path, final String encoding) throws FileNotFoundException {
+        final StringBuilder builder = new StringBuilder();
+        Scanner scan = null;
+        try {
+            scan = new Scanner(new FileInputStream(new File(path)), encoding);
+            while (scan.hasNextLine()) {
+                builder.append(scan.nextLine()).append(System.lineSeparator());
+            }
+            if (flag) {
+                throw new Error();
+            }
+        } finally {
+            if (scan != null) {
+                scan.close();
+            }
+        }
+        return builder.toString().trim();
+    }
+
+    /**
+     * Method launch.
+     *
+     * @param path     - path to the file.
+     * @param encoding - file encoding.
+     * @return result translation text.
+     * @throws FileNotFoundException - not fount file.
+     */
+    public static String run(final String path, final String encoding) throws FileNotFoundException {
+        final String res = readFile(path, encoding);
+        return toReversCaseWord(res);
+    }
+
+    /**
+     * To upper case word more {@link Part1#WORD_MAX_LENGTH}.
+     *
+     * @param input - input text for parse with regular expression.
+     * @return working method results.
+     */
+    private static String toReversCaseWord(final String input) {
+
+        final StringBuilder newBuild = new StringBuilder();
+        final String[] words = input.split("\\s*(\\s|,|!|\\.)\\s*");
+        for (final String word : words) {
+            if (word.length() <= WORD_MAX_LENGTH) {
+                newBuild.append(word);
+                newBuild.append(" ");
+            }else {
+                final char[] chars = word.toCharArray();
+                for (int i = 0; i < chars.length; i++) {
+                    final char c = chars[i];
+                    if (Character.isUpperCase(c)) {
+                        chars[i] = Character.toLowerCase(c);
+                    } else if (Character.isLowerCase(c)) {
+                        chars[i] = Character.toUpperCase(c);
+                    }
+                }
+
+                newBuild.append(chars);
+                newBuild.append(" ");
+
+            }
+
+        }
+        return newBuild.toString();
+
+
+    }
+
+    /**
+     * Default constructor.
+     */
+    private Part1() {
+    }
+}

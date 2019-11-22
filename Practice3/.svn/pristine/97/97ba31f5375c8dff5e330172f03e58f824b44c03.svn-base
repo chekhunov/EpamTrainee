@@ -1,0 +1,91 @@
+package ua.nure.chekhunov.practice3;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+//Для хеширования информации (например, паролей) используют 
+//метод MessageDigest#digest, который возвращает хеш в виде массива байт.
+//Пример хеширования пароля с помощью алгоритма хеширования MD5 
+//(другие алгоритмы - SHA-256; SHA-512 и пр.)
+
+
+public class Part4 {
+	
+    /**
+     * Default constructor.
+     * 
+     * @throws UnsupportedOperationException
+     *             - if create instance Part4.
+     */
+    private Part4() {
+        throw new UnsupportedOperationException("non instance Part4");
+    }
+
+    /**
+     * Convert string input data to string hash-hex.
+     * 
+     * @param input
+     *            - input data.
+     * @param algorithm
+     *            - name algorithm.
+     * @param encoding
+     *            - encoding.
+     * @return hash code in hex
+     * @throws NoSuchAlgorithmException
+     *             - not found input algorithm.
+     * @throws UnsupportedEncodingException
+     *             - encoding exceptions.
+     */
+    public static String hash(final String input, final String algorithm)
+            throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        final String encoding = "Cp1251";
+        MessageDigest digest;
+        switch (algorithm) {
+        case "MD5":
+            digest = MessageDigest.getInstance(algorithm);
+            break;
+        case "SHA-256":
+            digest = MessageDigest.getInstance(algorithm);
+            break;
+        case "SHA-512":
+            digest = MessageDigest.getInstance(algorithm);
+            break;
+        default:
+            throw new NoSuchAlgorithmException("Not found input algorithm");
+        }
+        digest.reset();
+        digest.update(input.getBytes(encoding));
+        byte[] hash = digest.digest();
+        StringBuilder hexString = new StringBuilder();
+        StringBuilder hex = new StringBuilder();
+        for (byte var : hash) {
+            hex.append(Integer.toHexString(0xFF & var));
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+            hex.setLength(0);
+        }
+        hexString.toString();
+        String result = hexString.toString();
+        String upperWord = result.toUpperCase(); 
+        return upperWord;
+    }
+
+	
+    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+    	
+    	System.out.println(hash("asdf", "MD5"));
+        System.out.println(hash("asdf", "SHA-256"));
+        
+        }
+
+    	
+//    	912EC803B2CE49E4A541068D495AB570
+//    	F0E4C2F76C58916EC258F246851BEA091D14D4247A2FC3E18694461B1816E13B
+
+    }
+
+
+

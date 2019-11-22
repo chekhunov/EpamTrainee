@@ -1,0 +1,306 @@
+package ua.nure.chekhunov.practice3;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Implementation "Part1".
+ * 
+ * @author chekhunov.
+ * @version 1.0.
+ */
+public class Part1 {
+
+    /**
+     * Input text.
+     */
+    private String input;
+
+    /**
+     * str "password".
+     */
+    private static final String PASSWORD = "Password";
+    /**
+     * Min random value.
+     */
+    private static final int MIN_RAND = 0;
+    /**
+     * Max random value.
+     */
+    private static final int MAX_RAND = 9;
+    /**
+     * Size password.
+     */
+    private static final int SIZE_PASSWORD = 4;
+    /**
+     * Regex for convert1 - convert3.
+     */
+    private static final String REGEX_1_3 = "\\s*(([\\w0-9]+)\\s*;{1}\\s*)((\\s*([\\p{L}]+))\\"
+            + "s+([\\p{L}]+))\\s*;{1}\\s*(([a-z0-9]+)(\\s*(@{1})"
+            + "\\s*(\\w+\\.\\s*[a-z]{1,4})))\\s*";
+    /**
+     * Regex for convert4.
+     */
+    private static final String REGEX_4 = "\\s*(.+?)\\s*(;{1})\\s*(.+?)\\s*(;{1})\\s*(.+[^\\s])";
+
+    /**
+     * Index group for the Login.
+     */
+    private static final int GROUP_LOGIN = 2;
+    /**
+     * index group for the Name.
+     */
+    private static final int GROUP_NAME = 3;
+    /**
+     * Index group for the Email.
+     */
+    private static final int GROUP_EMAIL = 7;
+    /**
+     * Index group for the Domen.
+     */
+    private static final int GROUP_DOMEN = 11;
+
+    /**
+     * Constructor with parameters.
+     * 
+     * @param input
+     *            - input text.
+     */
+    public Part1(final String input) {
+        this.input = input;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     */
+    public String convert1() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Pattern pattern = Pattern.compile(REGEX_1_3);
+        Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
+            stringBuilder.append(matcher.group(GROUP_LOGIN) + " ==> "
+                    + matcher.group(GROUP_EMAIL).replaceAll(" ", "") + System.lineSeparator());
+        }
+        return stringBuilder.toString().trim();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see subtask01
+     */
+    public String convert2() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Pattern pattern = Pattern.compile(REGEX_1_3);
+        Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
+            stringBuilder.append(matcher.group(GROUP_NAME) + " (email: "
+                    + matcher.group(GROUP_EMAIL).replaceAll(" ", "") + ")"
+                    + System.lineSeparator());
+        }
+        return stringBuilder.toString().trim();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see subtask01
+     */
+    public String convert3() {
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder[] buff;
+        Set<String> domain = new HashSet<>();
+        Pattern pattern = Pattern.compile(REGEX_1_3);
+        Matcher matcher = pattern.matcher(input);
+
+        while (matcher.find()) {
+            domain.add(matcher.group(GROUP_DOMEN).replaceAll(" ", ""));
+        }
+        buff = new StringBuilder[domain.size()];
+        for (int i = 0; i < buff.length; i++) {
+            buff[i] = new StringBuilder();
+        }
+        matcher.reset();
+        int num;
+        while (matcher.find()) {
+            num = 0;
+            for (String var : domain) {
+                if (var.equals(matcher.group(GROUP_DOMEN).replaceAll(" ", ""))) {
+                    buff[num].append(matcher.group(GROUP_LOGIN) + ", ");
+                }
+                num++;
+            }
+        }
+        num = 0;
+        for (String var : domain) {
+            buff[num].setLength(buff[num].length() - 2);
+            stringBuilder.append(var + " == > " + buff[num]).append(System.lineSeparator());
+            num++;
+        }
+        return stringBuilder.toString().trim();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see subtask01
+     */
+    public String convert4() {
+        Random rand;
+        StringBuilder stringBuilder = new StringBuilder();
+        Pattern pattern = Pattern.compile(REGEX_4);
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.find()) {
+            stringBuilder.append(matcher.group() + ";" + PASSWORD);
+        }
+        rand = new Random();
+        while (matcher.find()) {
+            stringBuilder.append(matcher.group() + ";");
+            for (int i = 0; i < SIZE_PASSWORD; i++) {
+                stringBuilder.append(String.valueOf(rand.nextInt(MAX_RAND - MIN_RAND) + MIN_RAND));
+            }
+        }
+        return stringBuilder.toString().trim();
+    }
+}
+
+
+//import java.io.File;
+//import java.io.IOException;
+//import java.util.Random;
+//import java.util.Scanner;
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
+//
+///**
+// * Implementation "Part1".
+// * 
+// * @author chekhunov
+// */
+//public class Part1 {
+//
+//    /**
+//     * String input get part1.txt
+//     */
+//    private static String input = Part1.getInput("part1.txt");
+//
+//    /**
+//     * @param fileName get input(part1.txt)
+//     * @return - String
+//     * @see reading txt file "Cp1251"
+//     */
+//    public static String getInput(String fileName) {
+//        StringBuilder sb = new StringBuilder();
+//        try {
+//            Scanner scanner = new Scanner(new File(fileName), "Cp1251");
+//            while (scanner.hasNextLine()) {
+//                sb.append(scanner.nextLine()).append(System.lineSeparator());
+//            }
+//            return sb.toString().trim();
+//        } catch (IOException ex) {
+//            System.err.println("not find file Part1");
+//        }
+//        return sb.toString();
+//    }
+//
+//    /**
+//     * @param fileName get input(part1.txt)
+//     * @return - String
+//     * @see subtask01.Convert#convert1(java.lang.String)
+//     */
+//    public static String convert1(String input) {
+//
+//        String[] text = input.split(System.lineSeparator());
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 1; i < text.length; i++) {
+//            String[] a = text[i].split(";");
+//            sb.append(a[0] + " " + a[2] + System.lineSeparator());
+//        }
+//        return sb.toString();
+//    }
+//
+//    /**
+//     * @param fileName get input(part1.txt)
+//     * @return - String
+//     * @see subtask01.Convert#convert2(java.lang.String)
+//     */
+//    public static String convert2(String input) {
+//        String[] text = input.split(System.lineSeparator());
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 1; i < text.length; i++) {
+//            String[] a = text[i].split("[\\s\\;]");
+//            sb.append(a[2] + " " + a[1] + " (email: " + a[3] + ")" + System.lineSeparator());
+//
+//        }
+//        sb.deleteCharAt(sb.length() - 1);
+//        return sb.toString();
+//
+//    }
+//
+//    /**
+//     * @param fileName get input(part1.txt)
+//     * @return - String
+//     * @see subtask01.Convert#convert3(java.lang.String)
+//     */
+//    public static String convert3(String input) {
+//        Pattern p = Pattern.compile("^?(.+;)(.+;)(.+)(@.+)");
+//        Matcher m = p.matcher(input);
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(" ");
+//        while (m.find()) {
+//            Pattern p2 = Pattern.compile(m.group(4).substring(1));
+//            Matcher m2 = p2.matcher(sb);
+//            if (!m2.find()) {
+//                sb.append(System.lineSeparator() + m.group(4).substring(1) + " ==> "
+//                        + m.group(1).substring(0, m.group(1).length() - 1));
+//            } else {
+//                Pattern p3 = Pattern.compile(m.group(4).substring(1) + ".+");
+//                Matcher m3 = p3.matcher(sb);
+//                m3.find();
+//                sb.insert(m3.end(), ", " + m.group(1).substring(0, m.group(1).length() - 1));
+//            }
+//        }
+//        return sb.toString().substring(2);
+//
+//    }
+//
+//    /**
+//     * @param fileName get input(part1.txt)
+//     * @return - String
+//     * @see subtask01.Convert#convert4(java.lang.String)
+//     */
+//    public static String convert4(String input) {
+//        Random rand = new Random();
+//        String[] text = input.split(System.lineSeparator());
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(text[0] + ";Password" + System.lineSeparator());
+//        for (int i = 1; i < text.length; i++) {
+//            int random = rand.nextInt(9999);
+//            while (random < 1001) {
+//                random = rand.nextInt(9999);
+//            }
+//            sb.append(text[i] + ";" + random + System.lineSeparator());
+//
+//        }
+//        return sb.toString();
+//    }
+//
+//    /**
+//     * Main function.
+//     * 
+//     * @param args - argument functions main.
+//     * @throws IOException
+//     */
+//    public static void main(String[] args) {
+//
+//        System.out.println(Part1.convert1(input) + System.lineSeparator());
+//        System.out.println(Part1.convert2(input) + System.lineSeparator());
+//        System.out.println(Part1.convert3(input) + System.lineSeparator());
+//        System.out.println(Part1.convert4(input) + System.lineSeparator());
+//
+//    }
+//}

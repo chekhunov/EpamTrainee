@@ -1,0 +1,29 @@
+package ua.nure.chekhunov.practice7;
+
+import junit.framework.Test;
+import ua.nure.chekhunov.practice7.controller.DOMController;
+import ua.nure.chekhunov.practice7.controller.SAXController;
+import ua.nure.chekhunov.practice7.controller.STAXController;
+
+public class Main {
+	
+
+	
+	public static void main(String[] args) throws Exception {
+		// DOM parser
+		DOMController domController = new DOMController(args[0]);
+		domController.parseXML(true);
+		domController.saveToXML();
+
+		// StAX parser
+		STAXController stAXController = new STAXController(args[0]);
+		stAXController.parse();
+		stAXController.writeXML();
+
+		// Sax parser
+		SAXController saxController = new SAXController(args[0]);
+		saxController.parse(true);
+		saxController.writeXML();
+		
+	}
+}

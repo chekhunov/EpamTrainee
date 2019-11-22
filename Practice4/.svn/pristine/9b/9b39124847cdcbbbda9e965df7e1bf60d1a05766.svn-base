@@ -1,0 +1,209 @@
+package ua.nure.chekhunov.practice4;
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+class Parser implements Iterable<String> {
+
+	private String encoding = "Cp1251";
+
+	private Matcher matcher;
+	
+	private static final String REGEXP = "\\p{javaUpperCase}.*?\\.";
+	
+	public final String getEncoding() {
+		return encoding;
+	}
+
+	public Matcher getMatcher() {
+		return matcher;
+	}
+
+	public final void setMatcher(Matcher matcher) {
+		this.matcher = matcher;
+	}
+
+	public Parser(File file) {
+
+		StringBuilder sb = new StringBuilder();
+		Scanner s;
+		try {
+			s = new Scanner(file, getEncoding());
+			while (s.hasNextLine()) {
+				sb.append(s.nextLine()).append(" ");
+				sb.delete(sb.length() - 1, sb.length());
+				Pattern p = Pattern.compile(REGEXP);
+				setMatcher(p.matcher(sb));
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println(file + " not found");
+		}
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+		return new ParserIterator(getMatcher());
+	}
+
+	private static class ParserIterator implements Iterator<String> {
+
+		private Matcher matcher;
+
+		public Matcher getMatcher() {
+			return this.matcher;
+		}
+
+		public final void setMatcher(Matcher matcher) {
+			this.matcher = matcher;
+		}
+
+		public ParserIterator(Matcher matcher) {
+			setMatcher(matcher);
+		}
+
+		@Override
+		public boolean hasNext() {
+			return getMatcher().find();
+		}
+
+		@Override
+		public String next() {
+			return getMatcher().group();
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+
+	}
+
+}
+//
+//import java.io.IOException;
+//import java.io.Serializable;
+//import java.util.Iterator;
+//import java.util.NoSuchElementException;
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
+//
+///**
+// * Implementation  "Parser".
+// *
+// * @author chekhunov.
+// */
+//public class Parser implements Iterable<String>, Serializable {
+//    /**
+//     * Implementation IteratorImp.<br>
+//     * IteratorImp implements {@link Iterator}.
+//     *
+//     * @author chekhunov.
+//     */
+//    private class IteratorImp implements Iterator<String> {
+//        /**
+//         * Regex for word search.
+//         */
+//        private static final String REGEX = "([\\p{L}][^\\.!?]*[\\.!?([\\p{L}])])";
+//
+//        /**
+//         * {@link Matcher}.
+//         */
+//        private final Matcher matcher;
+//        /**
+//         * {@link Pattern}.
+//         */
+//        private final Pattern pattern;
+//
+//        /**
+//         * Result searching.
+//         */
+//        private boolean resFind;
+//        /**
+//         * Flag next item.
+//         */
+//        private boolean isFlagNext = false;
+//
+//        {
+//            pattern = Pattern.compile(REGEX);
+//            matcher = pattern.matcher(textFile);
+//        }
+//
+//        /*
+//         * (non-Javadoc)
+//         *
+//         * @see java.util.Iterator#hasNext()
+//         */
+//        @Override
+//        public boolean hasNext() {
+//            if (!isFlagNext) {
+//                resFind = matcher.find();
+//                isFlagNext = true;
+//            }
+//            return resFind;
+//        }
+//
+//        /*
+//         * (non-Javadoc)
+//         *
+//         * @see java.util.Iterator#next()
+//         */
+//        @Override
+//        public String next() {
+//            String res;
+//            if (isFlagNext) {
+//                isFlagNext = false;
+//            } else {
+//                resFind = matcher.find();
+//            }
+//            if (!resFind) {
+//                throw new NoSuchElementException("No found next item");
+//            }
+//            res = matcher.group();
+//            return res;
+//        }
+//
+//        /*
+//         * (non-Javadoc)
+//         *
+//         * @see java.util.Iterator#remove()
+//         */
+//        @Override
+//        public void remove() {
+//            throw new UnsupportedOperationException("remove");
+//        }
+//    }
+//    private static final long serialVersionUID = 478776519760957689L;
+//    /**
+//     * Read data.
+//     */
+//    private final String textFile;
+//
+//    /**
+//     * Constructor with parameters.
+//     *
+//     * @param path
+//     *            - path to the file.
+//     * @param encoding
+//     *            - encoding file
+//     * @throws IOException
+//     *             - exception I/o.
+//     */
+//    public Parser(final String path, final String encoding) throws IOException {
+//        textFile = Part1.readFile(path, encoding);
+//    }
+//
+//    /*
+//     * (non-Javadoc)
+//     *
+//     * @see java.lang.Iterable#iterator()
+//     */
+//    @Override
+//    public Iterator<String> iterator() {
+//        return new IteratorImp();
+//    }
+//}

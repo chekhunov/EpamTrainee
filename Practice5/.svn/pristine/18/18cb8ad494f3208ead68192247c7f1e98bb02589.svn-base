@@ -1,0 +1,58 @@
+package ua.nure.chekhunov.practice5;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
+/**
+ * @author chekhunov
+ *
+ */
+public class Spam extends Thread {
+
+	private Spam() {
+	}
+		
+	private String[] messages = new String[] { "@@@", "bbbbbbb" };
+	private int[] time = new int[] { 333, 222 };
+	
+
+	@Override
+	public void run() {
+		for (int i = 0; i < time.length; i++) {
+			try {
+				Thread.sleep(time[i]);
+			} catch (InterruptedException e) {
+				System.err.println("Thread:" + Thread.currentThread().getName()
+						+ " is interrupted");
+			}
+			System.out.println(messages[i]);
+		}
+	}
+
+	public static void main(String[] args) {
+		Spam s = new Spam();
+		s.start();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				while (true) {
+					Scanner in = new Scanner(System.in);
+					try {
+						sleep(100);
+						in.nextLine();
+						in.close();
+						break;
+					} catch (NoSuchElementException e) {
+						continue;
+					} catch (InterruptedException e) {
+						continue;
+					} 
+				}
+				System.out.println("stopped");
+				s.interrupt();
+			}
+		}).start();
+		
+	}
+
+}

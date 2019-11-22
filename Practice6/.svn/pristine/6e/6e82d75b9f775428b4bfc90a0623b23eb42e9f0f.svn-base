@@ -1,0 +1,34 @@
+package ua.nure.chekhunov.practice6.part6;
+
+import java.util.Comparator;
+
+
+public class Part62 extends Command {
+
+	
+	public Part62(final String inputStr, final int count, final Printer printer) {
+		super(printer, inputStr, count);
+	}
+
+	
+	@Override
+	public void execute() {
+		getWordContainer().add(getInputStr());
+		getWordContainer().sort(new Comparator<Word>() {
+			@Override
+			public int compare(final Word o1, final Word o2) {
+				return o2.getWord().length() - o1.getWord().length();
+			}
+		});
+		StringBuilder resStr = new StringBuilder();
+		final int length = Math.min(getCount(), getWordContainer().size());
+		Word word;
+		for (int i = 0; i < length; i++) {
+			word = getWordContainer().get(i);
+			resStr.append(
+					word.getWord() + " ==> " + word.getWord().length() + System.lineSeparator());
+		}
+		getPrinter().show("length" + System.lineSeparator() + resStr.toString());
+	}
+
+}

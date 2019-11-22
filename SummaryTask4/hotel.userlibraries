@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: javax.servlet:javax.servlet-api:3.0.1">
+    <archive path="/Users/macbookpro/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar" />
+  </library>
+  <library name="Maven: javax.servlet:jsp-api:2.0">
+    <archive path="/Users/macbookpro/.m2/repository/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar" />
+  </library>
+  <library name="Maven: javax.servlet:servlet-api:2.4">
+    <archive path="/Users/macbookpro/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar" />
+  </library>
+  <library name="Maven: jstl:jstl:1.2">
+    <archive path="/Users/macbookpro/.m2/repository/jstl/jstl/1.2/jstl-1.2.jar" />
+  </library>
+  <library name="Maven: junit:junit:3.8.1">
+    <archive path="/Users/macbookpro/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar" />
+  </library>
+  <library name="Maven: log4j:log4j:1.2.17">
+    <archive path="/Users/macbookpro/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar" />
+  </library>
+  <library name="Maven: mysql:mysql-connector-java:5.1.48">
+    <archive path="/Users/macbookpro/.m2/repository/mysql/mysql-connector-java/5.1.48/mysql-connector-java-5.1.48.jar" />
+  </library>
+  <library name="javaee-api-5.0-2">
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javaee-api-5.0-2.jar" />
+  </library>
+  <library name="javax.annotation">
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javax.annotation.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javax.ejb.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javax.jms.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javax.persistence.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javax.resource.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javax.servlet.jsp.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javax.transaction.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/activation-1.1.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/javaee-api-5.0-2.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/junit-3.8.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/log4j-1.2.17.jar" />
+    <archive path="/Users/macbookpro/Desktop/Epam/rabochaya/moe/lib/lib/mail-1.4.jar" />
+  </library>
+  <library name="javax.servlet:jstl:1.2">
+    <archive path="/Users/macbookpro/.m2/repository/javax/servlet/jstl/1.2/jstl-1.2.jar" />
+  </library>
+</eclipse-userlibraries>
+

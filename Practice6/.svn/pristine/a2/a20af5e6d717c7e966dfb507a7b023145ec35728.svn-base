@@ -1,0 +1,9 @@
+package ua.nure.chekhunov.practice6.part4;
+
+
+public interface Node<E> {
+	
+	boolean hasStep();
+
+	E step();
+}

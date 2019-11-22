@@ -1,0 +1,159 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
+  <display-name>Archetype Created Web Application</display-name>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.authentication.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.authentication.RegistrationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderFormServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.user_servlets.OrderFormServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>RoomDetailsServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.RoomDetailsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.users.UserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveOrderServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.RemoveOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditingServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.user_servlets.EditingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.admin.AdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderAdminServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.admin_servlets.OrderAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderUserServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.user_servlets.OrderUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RejectingServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.RejectingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchRoomServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.admin_servlets.SearchRoomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.order_room.user_servlets.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserListServlet</servlet-name>
+        <servlet-class>ua.nure.chekhunov.summarytask4.servlets.admin.UsersListServlet</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/authentication</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderFormServlet</servlet-name>
+        <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomDetailsServlet</servlet-name>
+        <url-pattern>/room/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveOrderServlet</servlet-name>
+        <url-pattern>/remove_warning</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditingServlet</servlet-name>
+        <url-pattern>/edit_order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderAdminServlet</servlet-name>
+        <url-pattern>/admin_order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderUserServlet</servlet-name>
+        <url-pattern>/user_order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RejectingServlet</servlet-name>
+        <url-pattern>/reject_warning</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchRoomServlet</servlet-name>
+        <url-pattern>/search_room</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/bill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserListServlet</servlet-name>
+        <url-pattern>/users_list</url-pattern>
+    </servlet-mapping>
+
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>ua.nure.chekhunov.summarytask4.filters.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>ua.nure.chekhunov.summarytask4.filters.AuthenticationFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>LanguageFilter</filter-name>
+        <filter-class>ua.nure.chekhunov.summarytask4.filters.LanguageFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LanguageFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+</web-app>

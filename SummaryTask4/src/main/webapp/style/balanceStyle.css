@@ -1,0 +1,73 @@
+body{
+    background-image: url(../img/bg03.jpg);
+    background-size: cover;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.leftColumn {
+    float: left;
+    width: 25%;
+    padding: 20px;
+}
+
+.rightColumn {
+    overflow: hidden;
+    margin: 5% 5% 15% 0;
+    float: left;
+    width: 70%;
+    background-color:rgba(105, 105, 105, 0.6);
+    padding: 20px;
+
+}
+
+.balanceStatus {
+    float: left;
+    margin: 0 10% 0 0;
+    width: 25%;
+    font-size: 25px;
+}
+
+.inputBalance {
+    padding: 7% ;
+}
+
+#sumUp{
+    margin:-3% 0 0 20%;
+    width: 45%;
+    padding: 10px 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+#sumUp:invalid:not(:placeholder-shown) {
+    border-color: red;
+}
+
+#sumUp:valid:not(:placeholder-shown) {
+    border-color: green;
+}
+
+.addBalance {
+    overflow: hidden;
+    background-color: #333;
+    opacity: 1;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    padding: 11px 18px;
+    margin: -5% 0 0 37%;
+}
+
+.addBalance:hover {
+    background-color: #D3D3D3;
+    color:black;
+}

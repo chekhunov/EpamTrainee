@@ -1,0 +1,81 @@
+body {
+    background-image: url(../img/bg03.jpg);
+    background-size: cover;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+    opacity: 0.9;
+}
+
+.leftColumn {
+    float: left;
+    width: 25%;
+    padding: 20px;
+
+}
+
+.rightColumn {
+    overflow: hidden;
+    float: left;
+    margin: 5% 5% 5% 10%;
+    width: 60%;
+    background-color: rgba(192, 192, 192, 0.8);
+    padding: 20px;
+
+}
+
+.row {
+    padding: 10px 20px;
+    margin: 0 0 25px 0;
+}
+
+input[type=text] {
+    margin-top: 2%;
+    width: 95%;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size:15px;
+}
+
+.row {
+    padding: 10px 20px;
+    margin: 0 0 25px 0;
+}
+
+.label {
+    float: left;
+    width: 30%;
+    margin-top: 3%;
+    text-align: center;
+    font-size:17px;
+}
+
+.value {
+    float: left;
+    width: 70%;
+    margin-top: 6px;
+}
+
+.submitBtn {
+    padding: 13px 26px;
+    margin: 3% 0 0 45%;
+    font-size: 16px;
+    color: black;
+    background-color: rgba(30, 144, 255, 0.5);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.submitBtn:hover {
+    transition: all 0.3s;
+    background-color: rgba(173, 216, 230, 0.8);
+    color: black;
+}

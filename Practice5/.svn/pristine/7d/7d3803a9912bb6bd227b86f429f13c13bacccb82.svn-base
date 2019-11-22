@@ -1,0 +1,94 @@
+package ua.nure.chekhunov.practice5;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
+
+public final class Part2 {
+
+	private static final InputStream STD_IN = System.in;
+
+	static final long TIME_SLEEP = 2;
+
+	private Part2() {
+		throw new UnsupportedOperationException("non instance Part2");
+	}
+
+	public static void main(String[] args) throws InterruptedException, IOException {
+
+		ByteArrayInputStream bais = new ByteArrayInputStream(System.lineSeparator().getBytes());
+		System.setIn(bais);
+
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				Spam.main(null);
+
+			}
+		};
+		t.start();
+		TimeUnit.SECONDS.sleep(TIME_SLEEP);
+		// c) дождаться завершения Spam.main
+		t.join();
+
+		// d) восстановить системный поток
+		System.setIn(STD_IN);
+	}
+}
+
+class Work extends InputStream {
+
+	@Override
+	public int read() throws IOException {
+		try {
+			TimeUnit.SECONDS.sleep(3000);
+		} catch (InterruptedException e) {
+			System.err.println("Try to send enter to standard input");
+			e.printStackTrace();
+		}
+
+		byte[] buf = new byte[1];
+		int result = read(buf, 0, 1);
+		if (result == -1) {
+			return -1;
+		} else {
+			return (int) buf[0];
+
+		}
+	}
+
+	public int read(byte b[]) throws IOException {
+		return read(b, 0, b.length);
+	}
+
+	public int read(byte b[], int off, int len) throws IOException {
+		if (b == null) {
+			throw new NullPointerException();
+		} else if (off < 0 || len < 0 || len > b.length - off) {
+			throw new IndexOutOfBoundsException();
+		} else if (len == 0) {
+			return 0;
+		}
+
+		int c = read();
+		if (c == -1) {
+			return -1;
+		}
+		b[off] = (byte) c;
+
+		int i = 1;
+		try {
+			for (; i < len; i++) {
+				c = read();
+				if (c == -1) {
+					break;
+				}
+				b[off + i] = (byte) c;
+			}
+		} catch (IOException ee) {
+		}
+		return i;
+	}
+
+}

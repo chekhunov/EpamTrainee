@@ -1,0 +1,12 @@
+package ua.nure.chekhunov.practice1;
+
+public class Part2 {
+
+	public static void sumNumber(String[] args) {
+		if (args.length != 0) {
+			int x = Integer.parseInt(args[0]);
+			int y = Integer.parseInt(args[1]);
+			System.out.println(x + y);
+		}
+	}
+}

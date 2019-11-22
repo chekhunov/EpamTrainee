@@ -1,0 +1,80 @@
+package ua.nure.chekhunov.practice6.part3;
+
+public class Parking {
+
+	private static Object[] park;
+
+	static int countCar = 0;
+	//static int n = 4;
+
+	public Parking(int n) {
+		park = new Object[n];
+		for (int i = 0; i < n; i++) {
+			park[i] = null;
+		}
+	}
+
+	public static boolean depart(int k) {
+		if (k < 0 || k > (park.length - 1)) {
+			throw new IllegalArgumentException("k < 0 || k > (n - 1)");
+		}
+		if (k == 4) {
+			k = 0;
+		}
+
+		if (park[k] == null) {
+			print();
+			return false;
+		} else {
+			park[k] = null;
+			countCar--;
+		}
+
+		//print();
+		return true;
+	}
+
+	public static boolean arrive(int k) {
+
+		if (countCar == park.length) {
+			print();
+			return false;
+		}
+
+		if (k <= 0 || k > park.length) {
+			throw new IndexOutOfBoundsException("number > size || number < 0");
+		}
+
+		if (k == 4) {
+			k = 0;
+		}
+
+		
+		
+		if (park[k] != null) {
+			for (int i = 0; i < park.length-1; i++) {
+				if (park[i] == null) {
+					park[i] = 1;
+					countCar++;
+					break;
+				}
+			}
+		} else {
+			park[k] = 1;
+			countCar++;
+		}
+
+		//print();
+		return true;
+	}
+
+	public static void print() {
+		StringBuilder sb = new StringBuilder();
+		//sb.append("// ");
+		for (Object car : park) {
+			sb = (car == null) ? sb.append("0") : sb.append("").append(car).append("");
+		}
+		System.out.print(sb.toString()+ System.lineSeparator());
+	}
+
+}

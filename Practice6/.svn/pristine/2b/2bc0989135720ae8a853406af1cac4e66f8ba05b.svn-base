@@ -1,0 +1,17 @@
+package ua.nure.chekhunov.practice6.part1;
+
+import java.util.Comparator;
+
+/**
+ * @author chekhunov
+ *
+ */
+public class CompareByFrequency implements Comparator<Word> {
+
+	@Override
+	public int compare(Word o1, Word o2) {
+		return -(o1.getFrequency() - o2.getFrequency());
+
+	}
+
+}

@@ -1,0 +1,201 @@
+package ua.nure.chekhunov.practice6.part5;
+
+public class Tree<E extends Comparable<E>> {
+
+	private Node<E> root = null;
+
+	public boolean remove(final E element) {
+		if (root == null) {
+			return false;
+		} else {
+			if (root.getData().equals(element)) {
+				Node<E> node = new Node<>();
+				node.setLeft(root);
+				boolean result = remove(element, node, root);
+				root = node.getLeft();
+				return result;
+			} else {
+				return remove(element, null, root);
+			}
+		}
+	}
+
+	public void add(final E[] elements) {
+		for (E item : elements) {
+			add(item);
+		}
+	}
+
+	public boolean add(final E e) {
+		boolean flag = false;
+		Node<E> node = add(root, e);
+		if (!node.equals(root)) {
+			root = node;
+			flag = true;
+		}
+		return flag;
+	}
+
+	public void print() {
+		print(root, "");
+	}
+
+	protected E findMin(final Node<E> node) {
+		if (node.getLeft() == null) {
+			return node.data;
+		} else {
+			return findMin(node.left);
+		}
+	}
+
+	private void print(final Node<E> current, final String indent) {
+		if (current == null) {
+			return;
+		}
+		print(current.right, indent + "  ");
+		System.out.println(indent + current.data);
+		print(current.left, indent + "  ");
+	}
+
+	private Node<E> add(final Node<E> current, final E data) {
+		if (current == null) {
+			Node<E> node = new Node<>();
+			node.data = data;
+			return node;
+		}
+		if (current.data.compareTo(data) < 0) {
+			current.left = add(current.left, data);
+		} else if (current.data.compareTo(data) > 0) {
+			current.right = add(current.right, data);
+		}
+		return current;
+	}
+
+	private boolean remove(final E data, final Node<E> parent, final Node<E> current) {
+		if (current.getData().compareTo(data) < 0) {
+			if (current.getLeft() != null) {
+				return remove(data, current, current.left);
+			} else {
+				return false;
+			}
+		} else if (current.getData().compareTo(data) > 0) {
+			if (current.getRight() != null) {
+				return remove(data, current, current.right);
+			} else {
+				return false;
+			}
+		} else {
+			if (current.getLeft() != null && current.getRight() != null) {
+				current.setData(findMin(current.getLeft().right));
+				//current.setData(findMin(current.getLeft()));
+				remove(current.getData(), current, current.left);
+			} else if (parent.getLeft() == current) {
+				if (current.getLeft() != null) {
+					parent.left = current.left;
+				} else {
+					parent.left = current.right;
+				}
+			} else if (parent.getRight() == current) {
+				if (current.getLeft() != null) {
+					parent.setRight(current.left);
+				} else {
+					parent.right = current.right;
+				}
+			}
+			return true;
+		}
+	}
+
+	private static class Node<E> {
+
+		private Node<E> left = null;
+		private Node<E> right = null;
+		private E data;
+
+		public final Node<E> getLeft() {
+			return left;
+		}
+
+		public final void setLeft(final Node<E> left) {
+			this.left = left;
+		}
+
+		public final Node<E> getRight() {
+			return right;
+		}
+
+		public final void setRight(final Node<E> right) {
+			this.right = right;
+		}
+
+		public final E getData() {
+			return data;
+		}
+
+		public final void setData(final E data) {
+			this.data = data;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result *= prime;
+
+			if (data == null) {
+				result += 0;
+			} else {
+				result += data.hashCode();
+			}
+
+			if (left == null) {
+				result += 0;
+			} else {
+				result += left.hashCode();
+			}
+
+			if (right == null) {
+				result += 0;
+			} else {
+				result += right.hashCode();
+			}
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof Node)) {
+				return false;
+			}
+			Node<?> other = (Node<?>) obj;
+			if (data == null) {
+				if (other.data != null) {
+					return false;
+				}
+			} else if (!data.equals(other.data)) {
+				return false;
+			}
+			if (left == null) {
+				if (other.left != null) {
+					return false;
+				}
+			} else if (!left.equals(other.left)) {
+				return false;
+			}
+			if (right == null) {
+				if (other.right != null) {
+					return false;
+				}
+			} else if (!right.equals(other.right)) {
+				return false;
+			}
+			return true;
+		}
+	}
+}

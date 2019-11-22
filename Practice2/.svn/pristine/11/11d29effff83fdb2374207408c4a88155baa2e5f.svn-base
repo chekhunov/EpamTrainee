@@ -1,0 +1,515 @@
+package ua.nure.chekhunov.practice2;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ * @author macbookpro
+ *
+ */
+public class QueueImpl implements Queue {
+
+    private Node top;
+    private Node first;
+    private Node last;
+    private Object[] arr=new Object[3];
+    private int size = 0;
+    private int head = 0; // index of the current front item, if one exists
+    private int tail = 0; // index of next item to be added
+
+
+    public QueueImpl() {
+//		this.first = this.last = null;
+//		this.size = 0;
+    }
+    public QueueImpl(int capacity) {
+        arr = new Object[capacity];
+    }
+
+
+    public Node getTop() {
+
+        return top;
+
+    }
+
+    @Override
+    public void clear() {
+
+
+        for (int i = 0; i < arr.length; i++)
+            arr[i] = null;
+        size=0;
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+    @Override
+    public int size() {
+
+        return size;
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+    @Override
+    public Iterator<Object> iterator() {
+
+        return new IteratorImpl();
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+    @Override
+    public void enqueue(Object element) {
+
+//		
+//		 if (size == arr.length) {
+//	          //  throw new IllegalStateException("Cannot add to full queue");
+//	        }
+//	        arr[tail] = element;
+//	        tail = (tail + 1) % arr.length;
+//	        size++;
+//		 
+        Node oldlast = last;
+        last = new Node();
+        arr[tail] = element;
+        tail = (tail + 1) % arr.length;
+        last.next = null;
+        if (isEmpty())
+            first = last;
+        else oldlast.next=last;
+        size++;
+//		
+//		Object[] arr2 = new Object[arr.length + 1];
+//		System.arraycopy(arr, 0, arr2, 0, arr.length);
+//		arr2[arr2.length - 1] = element;
+//		arr = arr2;
+//		size++;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+    @Override
+    public Object dequeue() {
+        if (size == 0) {
+            throw new NoSuchElementException("Cannot remove from empty queue");
+        }
+        Object item = arr[head];
+        arr[head] = null;
+        head = (head + 1) % arr.length;
+        size--;
+        return item;
+    }
+//		if (isEmpty()) throw new NoSuchElementException("Queue underflow");
+//        Object element = first.element;
+//        first = first.next;
+//        modCount--;
+//        if (isEmpty()) last = null;   // to avoid loitering
+//        return element;
+//    }
+
+//	
+//		Object element = first.element;
+//		first = first.next;
+//		if (isEmpty())
+//			last = null;
+//		modCount--;
+//		return element;
+//	}
+
+//
+//		arr = new Object[] {};
+//		this.modCount = 0;
+//		
+//		Object[] temp = new Object[] {};
+//		System.arraycopy(arr, 0, temp, 0, pointer);
+//		return arr = temp;
+
+//	public Object removed(int index) {
+//
+//		Object[] arr2 = new Object[arr.length - 1];
+//		System.arraycopy(arr, 0, arr2, 0, index);
+//		System.arraycopy(arr, index + 1, arr2, index, arr2.length - index);
+//
+//		modCount--;
+//		return arr = arr2;
+//	}
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+    @Override
+    public Object top() {
+        if (size == 0) {
+            throw new NoSuchElementException("Cannot peek into empty queue");
+        }
+        return arr[size - 1];
+//		if (isEmpty()) {
+//			System.out.println("Stack is empty");
+//			System.exit(0);
+//		}
+//		return top.getData();
+    }
+
+    public boolean isEmpty() {
+
+        return size == 0; //или first == null;
+    }
+//		if (top == null) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+
+    public Object[] toArray() {
+
+        Object[] array = this.arr;
+
+        return array;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+//	@Override
+//	public String toString() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("[");
+//		for (int i = 0; i < toArray().length; i++) {
+//			if (toArray()[i] == null) {
+//				sb.append("");
+//				break;
+//			}
+//			sb.append("" + toArray()[i].toString() + "");
+//            if (i != size() - 1) {
+//                sb.append(", ");
+//            }
+//		}
+//		sb.append("]");
+//		return sb.toString();
+//	}
+
+    @Override
+    public String toString() {
+        Iterator<Object> i = iterator();
+        if (!i.hasNext())
+            return "[]";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (;;) {
+            Object e = i.next();
+            sb.append(e == this ? "(this Collection)" : e);
+            if (!i.hasNext())
+                return sb.append(']').toString();
+            sb.append(", ");
+        }
+    }
+
+    /**
+     * Removes the element at the specified position in this list. Shifts any
+     * subsequent elements to the left (subtracts one from their indices).
+     *
+     * @param index the index of the element to be removed.
+     * @throws IndexOutOfBoundsException {@inheritDoc}.
+     */
+//	public void remove(int index) {
+//
+//		restructMyList(index);
+//	}
+
+    /**
+     * Restructuring collections. Move item collections.
+     *
+     * @param index - restructuring period.
+     */
+//	private void restructMyList(final int index) {
+//
+//		size++;
+//
+//		if (index == size() - 1) {
+//			arr[index] = null;
+//
+//		} else {
+//			int lengthCopy = size() - index - 1;
+//			System.arraycopy(arr, index + 1, arr, index, lengthCopy);
+//		}
+//
+//		size--;
+//
+//		if (size == (arr.length / 4)) {
+//			resize(size + (arr.length / 4));
+//		}
+//	}
+
+    /**
+     * Change length collections.
+     *
+     * @param len - length new object.
+     */
+//	private void resize(final int len) {
+//
+//		Object[] temp = new Object[len];
+//		System.arraycopy(arr, 0, temp, 0, pointer);
+//		arr = temp;
+//	}
+
+    private class Node {
+
+        Object element;
+        private Node next;
+        private Node prev;
+
+        public Node() {
+        }
+
+        public Node(Object element) {
+            this.element = element;
+            this.next = null;
+        }
+
+        public Node(Object element, Node next) {
+            this.element = element;
+            this.next = next;
+            this.prev = prev;
+        }
+
+        public void setData(Object element) {
+            this.element = element;
+        }
+
+        public Object getData() {
+            return this.element;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
+        public Node getNext() {
+            return this.next;
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see ua.nure.chekhunov
+     */
+    private class IteratorImpl implements Iterator<Object> {
+
+        private int expectedModCount;
+        private int currentIndex = 0;
+        private int pointer = -1;
+        private boolean nextOrPrevious = false;
+        private boolean flag = true;
+
+        {
+            expectedModCount = QueueImpl.this.size;
+        }
+
+        public int getPointer() {
+            return pointer;
+        }
+
+        public void setPointer(int pointer) {
+            this.pointer = pointer;
+        }
+
+        public boolean isNextOrPrevious() {
+            return nextOrPrevious;
+        }
+
+        public void setNextOrPrevious(boolean nextOrPrevious) {
+            this.nextOrPrevious = nextOrPrevious;
+        }
+
+        public boolean isFlag() {
+            return flag;
+        }
+
+        public void setFlag(boolean flag) {
+            this.flag = flag;
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see ua.nure.chekhunov
+         */
+        @Override
+        public boolean hasNext() {
+
+            if (pointer < toArray().length - 1) {
+                return true;
+            }
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see ua.nure.chekhunov
+         */
+        @Override
+        public Object next() {
+
+            flag = false;
+            nextOrPrevious = false;
+            return toArray()[++pointer];
+
+        }
+
+        /*
+         * (non-Javadoc)
+         *
+         * @see ua.nure.chekhunov
+         */
+        @Override
+        public void remove() {
+            if (isFlag()) {
+                throw new IllegalStateException();
+            }
+            int i = 0;
+            if (!isNextOrPrevious()) {
+                i = pointer--;
+            } else {
+                i = ++pointer;
+            }
+            Object[] arr2 = new Object[arr.length - 1];
+            System.arraycopy(arr, 0, arr2, 0, i);
+            System.arraycopy(arr, i + 1, arr2, i, arr2.length - i);
+            arr = arr2;
+            flag = true;
+            if (isNextOrPrevious()) {
+                --pointer;
+            }
+        }
+//			if (pointer < 0) {
+//				throw new IllegalStateException("remove: Not does not indicate which item");
+//			}
+//			checkForComodification();
+//			QueueImpl.this.remove(pointer);
+//			if (pointer < currentIndex) {
+//				currentIndex--;
+//			}
+//			expectedModCount = size;
+//			pointer = -1;
+//		}
+//
+//		/**
+//		 * Check modifications object state.
+//		 */
+//		final void checkForComodification() {
+//
+//			if (size != expectedModCount) {
+//				// throw new ConcurrentModificationException();
+//			}
+//		}
+    }
+
+    public static void main(String[] args) {
+
+        Queue queue = new QueueImpl(3);
+        Iterator<Object> it = queue.iterator();
+
+
+
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+
+        System.out.println(it.next());
+        System.out.println(it.next());
+        System.out.println(it.next());
+        it.remove();
+        System.out.println(queue);
+
+        System.out.println(it.next());
+//        it.remove();
+//        System.out.println(queue);
+//
+//        System.out.println(it.next());
+//        it.remove();
+//        System.out.println(queue);
+//		queue.enqueue("A");
+//		queue.enqueue("B");
+//		queue.enqueue("C");
+//		System.out.print(queue);
+//		System.out.print(queue.dequeue());
+//		System.out.print(queue.dequeue());
+//		System.out.print(queue.dequeue());
+//		System.out.println();
+//		System.out.print(queue);
+
+//		queue.dequeue();
+//		System.out.println(queue);
+
+//		queue.enqueue("A");
+//		queue.enqueue("B");
+//		queue.enqueue("C");
+//		System.out.println(queue);
+//		System.out.println(queue.size());
+//		System.out.println(queue.toString());
+//		queue.clear();
+//		System.out.println(queue + "clear");
+//		queue.enqueue("A");
+//		queue.enqueue("B");
+//		queue.enqueue("C");
+//		System.out.println(queue);
+//		queue.top();
+//
+//		System.out.println("\nShow foreach iterator:");
+//		// foreach iterator
+//		for (Object o : queue) {
+//			System.out.print(o + " ");
+//		}
+//		Iterator<Object> it = queue.iterator();
+//		System.out.println("Show while iterator: ");
+//		// while iterator
+//		while (it.hasNext()) {
+//			System.out.print(it.next() + " ");
+//		}
+//
+//		System.out.println("\nShow remove iterator \n: " + queue);
+//		Iterator<Object> it1 = queue.iterator();
+//		while (it1.hasNext()) {
+//			it1.next();
+//			it.remove();
+    }
+
+}

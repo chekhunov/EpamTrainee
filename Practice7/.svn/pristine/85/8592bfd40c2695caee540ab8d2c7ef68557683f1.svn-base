@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tns:Tariffs xmlns:tns="http://www.example.org/output" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input input.xsd">
+<tns:Tariff>
+<tns:OperatorName>LifeCell</tns:OperatorName>
+<tns:TariffName>life</tns:TariffName>
+<tns:PayRoll>0.0</tns:PayRoll>
+<tns:SmsPrice>11.0</tns:SmsPrice>
+<tns:CallPrice>
+<tns:WithinNetworkCallPrice>1.0</tns:WithinNetworkCallPrice>
+<tns:OutOfNetworkCallPrice>2.0</tns:OutOfNetworkCallPrice>
+<tns:LandLineNumCallPrice>3.0</tns:LandLineNumCallPrice>
+</tns:CallPrice>
+<tns:Parameters>
+<tns:LovelyNumberRresence>17</tns:LovelyNumberRresence>
+<tns:Tariffication>12</tns:Tariffication>
+<tns:ConnectionPrice>0.0</tns:ConnectionPrice>
+</tns:Parameters>
+</tns:Tariff>
+<tns:Tariff>
+<tns:OperatorName>tns:OperatorName</tns:OperatorName>
+<tns:TariffName>tns:TariffName</tns:TariffName>
+<tns:PayRoll>0.0</tns:PayRoll>
+<tns:SmsPrice>0.0</tns:SmsPrice>
+<tns:CallPrice>
+<tns:WithinNetworkCallPrice>0.0</tns:WithinNetworkCallPrice>
+<tns:OutOfNetworkCallPrice>0.0</tns:OutOfNetworkCallPrice>
+<tns:LandLineNumCallPrice>0.0</tns:LandLineNumCallPrice>
+</tns:CallPrice>
+<tns:Parameters>
+<tns:LovelyNumberRresence>1</tns:LovelyNumberRresence>
+<tns:Tariffication>12</tns:Tariffication>
+<tns:ConnectionPrice>0.0</tns:ConnectionPrice>
+</tns:Parameters>
+</tns:Tariff>
+</tns:Tariffs>
